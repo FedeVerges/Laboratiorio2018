@@ -76,6 +76,9 @@ class T_Materias:
     def getListaMaterias(self):
         return self.__listaMaterias
 
+    def serListaMaterias(self, lista):
+        self.__listaMaterias= lista
+
 
 
 

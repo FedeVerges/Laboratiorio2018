@@ -6,6 +6,21 @@ from LaboratorioPython.Funcionalidades import *
 basedatos = BD_Escuela()
 basedatos.RegUs("fede","1234",2)
 
+a = Alumnos(3500,"juan","perez",41221770,2664372050,"armando@jofre@gmail.com","16/06/1998",4,"2005","0","juan","MA",10)
+a2 = Alumnos(1200,"jose","Di Marco","3028516",1155664461,"j_Dmarco@mail.com","16/09,1935",1,"2003","0","jose35","NA",10)
+basedatos.AltaAlumnoBaseDatos(a)
+basedatos.AltaAlumnoBaseDatos(a2)
+
+m = [Materia("Matematicas", 0, 0, 0, 1,1200), Materia("Lengua", 0, 0, 0, 2,1200),
+                           Materia("Física", 0, 0, 0, 3,1200),Materia("Química", 0, 0, 0, 4,1200),
+                           Materia("Biología", 0, 0, 0, 5,1200),Materia("Etica", 0, 0, 0, 6,1200),
+                           Materia("Geología", 0, 0, 0, 8,1200),Materia("Historia", 0, 0, 0, 7,1200),
+                           Materia("Computacion", 0, 0, 0, 9,1200)]
+tabla = T_Materias()
+tabla.serListaMaterias(m)
+basedatos.setTablaMaterias(tabla)
+
+
 
 def cambiarPantallas(ventana, tipoVentana, tipoUsuario=-1):
     # Destruyo la ventana anterior
@@ -23,7 +38,8 @@ def cambiarPantallas(ventana, tipoVentana, tipoUsuario=-1):
     elif tipoVentana == "login":
         Login(root)
     elif tipoVentana=="materias":
-        VentanaMaterias(root)
+        VentanaMaterias(root,tipoUsuario)
+
 
 
 class Login:
@@ -84,13 +100,17 @@ class MenuPrincipal:
                                               command=lambda: cambiarPantallas(self, "agregar alumno"))
             self.boton_salir = Button(self.frame, text="Cerrar Sesion", command=lambda: cambiarPantallas(self,"login"))
             self.boton_tablaUsarios = Button(self.frame, text="Tabla Usuarios", command=lambda: TablaUsuarios(basedatos))
-            self.boton_consultar_notas= Button(self.frame,text="Consultar Notas", command=lambda: cambiarPantallas(self,"materias"))
+            self.boton_consultar_notas= Button(self.frame,text="Consultar Notas", command=lambda: cambiarPantallas(self,"materias",tipoUsuario))
+            self.boton_listado_materias = Button(self.frame, text="Listado Materias", command=lambda: tablaMaterias(basedatos))
+
+
 
             self.boton_agregar_usuario.pack(side=TOP)
             self.boton_tablaUsarios.pack(side=TOP)
             self.boton_AgregarAlumno.pack(side=TOP)
             self.boton_listar_alumnos.pack(side=TOP)
             self.boton_consultar_notas.pack(side=TOP)
+            self.boton_listado_materias.pack(side=TOP)
 
 
 class VentanaAltaAlumno:
@@ -276,7 +296,7 @@ class VentanaUsuario:
         self.boton_eliminarUsuario.pack(side=RIGHT, fill=BOTH, expand=True, padx=5, pady=5)
 
 class VentanaMaterias:
-    def __init__(self,padre):
+    def __init__(self,padre,tipoUsuario):
         self.frame = Frame(padre)
         self.frame.grid()
         padre.title('Materias')
@@ -307,12 +327,12 @@ class VentanaMaterias:
         # Botones
         self.boton_consultar = Button(self.frame,text="Consultar",width =15,command=lambda:self.setearTexto(self.registro.get(),self.codigoMateria.get()))
         self.boton_cargar = Button(self.frame, text="Cargar Notas",width =15,command=lambda: self.setNotas(self.registro.get(), self.codigoMateria.get(), self.nota1.get(), self.nota2.get(), self.nota3.get()))
-
+        self.boton_back = Button(self.frame,text="Volver",width =15,command=lambda:cambiarPantallas(self,"menu principal",tipoUsuario))
         # posiciones
         self.label_registro_alumno.grid(row=0,column =1)
         self.texto_registro.grid(row=0,column=2)
-        self.label_CodigoMateria.grid(row=2,column=1,)
-        self.texto_codigoMateria.grid(row=2,column=2)
+        self.label_CodigoMateria.grid(row=1,column=1)
+        self.texto_codigoMateria.grid(row=1,column=2)
         self.label_nombre_alumno.grid(row=4,column=1)
         self.label_Materia1.grid(row=4,column=2)
         self.label_nota1.grid(row=7,column=1)
@@ -323,7 +343,8 @@ class VentanaMaterias:
         self.texto_nota3.grid(row=9,column=2)
 
         self.boton_consultar.grid(row=1,column=5)
-        self.boton_cargar.grid(row=10,column=5)
+        self.boton_cargar.grid(row=10,column=1)
+        self.boton_back.grid(row=10,column=5)
 
     def setearTexto(self, nro_registro,codigo_materia):
         m = Materia()

@@ -185,9 +185,52 @@ def tablaMaterias(base_datos=BD_Escuela()):
 
     root = Tk()
     root.title("Listado de Alumnos")
-    root.geometry('400x600')
+    root.geometry('600x600')
+    tabla = T_Materias()
+    tabla = base_datos.getTablaMaterias()
 
     # Etiquetas
+    label_registro_alumno = Label(root, text="Registro")
+    label_CodigoMateria = Label(root, text="Codigo de\n Materia")
+    label_Materia1 = Label(root, text="Nombre de la Materia")
+    label_nota1 = Label(root, text="nota 1")
+    label_nota2 = Label(root, text="nota 2")
+    label_nota3 = Label(root, text="nota 3")
+
+    # listBox
+    l_registro = Listbox(root, width=10, height=15)
+    l_codigo_materia = Listbox(root, width=10, height=15)
+    l_materia = Listbox(root, width=20, height=15)
+    l_nota1= Listbox(root, width=10, height=15)
+    l_nota2 = Listbox(root, width=10, height=15)
+    l_nota3 = Listbox(root, width=10, height=15)
+
+    for item in tabla.getListaMaterias():
+        l_registro.insert(0, item.getCodigoAlumno())
+        l_codigo_materia.insert(0, item.getCodigo())
+        l_materia.insert(0, item.getnombre())
+        l_nota1.insert(0, item.getnota1())
+        l_nota2.insert(0, item.getNota2())
+        l_nota3.insert(0, item.getNota3())
+
+
+    # acomodamos
+
+    label_registro_alumno.grid(row=0, column = 1)
+    label_CodigoMateria.grid(row=0, column = 2)
+    label_Materia1.grid(row=0, column = 3)
+    label_nota1.grid(row=0, column = 4)
+    label_nota2.grid(row=0, column = 5)
+    label_nota3.grid(row=0, column = 6)
+
+    l_registro.grid(row=1, column = 1)
+    l_codigo_materia.grid(row=1, column = 2)
+    l_materia.grid(row=1, column = 3)
+    l_nota1.grid(row=1, column = 4)
+    l_nota2.grid(row=1, column = 5)
+    l_nota3.grid(row=1, column = 6)
+
+    root.mainloop()
 
 
 '''

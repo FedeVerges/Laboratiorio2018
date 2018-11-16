@@ -109,8 +109,7 @@ class Principal():
 def main ():
     bdatos = BD_Escuela()
     bdatos.RegUs("fede","1234",2)
-    a = Alumnos(3500,"juan","perez",41221770,2664372050,"armando@jofre@gmail.com","16/06/1998",4,"2005","0","juan","MA",10)
-    a2 = Alumnos(1200,"jose","Di Marco","3028516",1155664461,"j_Dmarco@mail.com","16/09,1935",1,"2003","0","jose35","NA",10)
+
 
 
 

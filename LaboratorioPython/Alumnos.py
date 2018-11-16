@@ -17,11 +17,11 @@ class Alumnos:
         self.__usuario = usuario
         self.__concepto = concepto
         self.__inasistencias = inasistencias
-        self.__materias = [Materia("Matematicas", 0, 0, 0, 1), Materia("Lengua", 0, 0, 0, 2),
-                           Materia("Física", 0, 0, 0, 3),Materia("Química", 0, 0, 0, 4),
-                           Materia("Biología", 0, 0, 0, 5),Materia("Etica", 0, 0, 0, 6),
-                           Materia("Geología", 0, 0, 0, 8),Materia("Historia", 0, 0, 0, 7),
-                           Materia("Computacion", 0, 0, 0, 9)]
+        self.__materias = [Materia("Matematicas", 0, 0, 0, 1,1200), Materia("Lengua", 0, 0, 0, 2,1200),
+                           Materia("Física", 0, 0, 0, 3,1200),Materia("Química", 0, 0, 0, 4,1200),
+                           Materia("Biología", 0, 0, 0, 5,1200),Materia("Etica", 0, 0, 0, 6,1200),
+                           Materia("Geología", 0, 0, 0, 8,1200),Materia("Historia", 0, 0, 0, 7,1200),
+                           Materia("Computacion", 0, 0, 0, 9,1200)]
 
     def getNroregistro(self):
         return self.__Nro_Registro
