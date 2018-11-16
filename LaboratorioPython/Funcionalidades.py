@@ -181,7 +181,13 @@ def TablaUsuarios(bd=BD_Escuela()):
 
     root.mainloop()
 
+def tablaMaterias(base_datos=BD_Escuela()):
 
+    root = Tk()
+    root.title("Listado de Alumnos")
+    root.geometry('400x600')
+
+    # Etiquetas
 
 
 '''
@@ -287,9 +293,20 @@ def AAlumno(bdatos,nroRegistro=0 ,nombre="defecto" ,apellido="" ,dni=55 ,telefon
 
     a = Alumnos(nroRegistro,nombre, apellido, dni, telefono, email, fecha, año, fechaAlta, fechaBaja,usuario
                 , concepto, inasistencias)
-    print(a.getDni())
+    print(a.getEmail())
     if bdatos.AltaAlumnoBaseDatos(a):
         mensaje = messagebox.showinfo("Alumno Cargado"
                                       ,"El alumno: " +a.getnombre( ) +a.getApellido( ) +" \n ha sido cargado exitosamente")
     else:
         error = messagebox.showerror("Error Registro" ,"Ya existe un alumno en la base de datos")
+
+
+def CAlumno(bdatos=BD_Escuela(),nro_registro=0):
+    tabla = bdatos.getTablaAlumnos()
+    a = Alumnos()
+    a = tabla.ConsultaAlumno(nro_registro)
+    return a
+
+
+
+

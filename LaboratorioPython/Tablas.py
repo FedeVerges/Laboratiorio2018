@@ -46,7 +46,8 @@ class T_Alumnos:
 
 class T_Materias:
     def __init__(self):
-        self.__listaMaterias=[]
+        self.__listaMaterias=[Materia()]
+        self.__tabla={}
 
     def AltaMat(self, m = Materia()):
         self.__listaMaterias.append(m)
@@ -58,12 +59,17 @@ class T_Materias:
 
     def ModificacionMat(self,m = Materia()):
         for i in self.__listaMaterias:
-            if m.getnombre() == i.getnombre():
+            if m.getCodigo() == i.getCodigo():
                 self.__listaMaterias[self.__listaMaterias.index(i)]= m
-    def ConsultaMat(self, nombre):
-        for i in self.__listaMaterias:
-            if nombre == i.getnombre():
+
+    def ConsultaMat(self, nro_registro,cod_materia):
+        lista = list(filter(lambda x: x.getCodigoAlumno()==nro_registro, self.__listaMaterias))
+        print(lista)
+        for i in lista:
+            if i.getCodigo()==cod_materia:
                 return i
+            else:
+                print("el alumno no tiene materias")
 
 
 

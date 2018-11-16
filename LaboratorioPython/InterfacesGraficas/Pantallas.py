@@ -1,4 +1,6 @@
 from tkinter import ttk
+
+
 from LaboratorioPython.Funcionalidades import *
 
 basedatos = BD_Escuela()
@@ -20,6 +22,8 @@ def cambiarPantallas(ventana, tipoVentana, tipoUsuario=-1):
         VentanaUsuario(root)
     elif tipoVentana == "login":
         Login(root)
+    elif tipoVentana=="materias":
+        VentanaMaterias(root)
 
 
 class Login:
@@ -80,13 +84,13 @@ class MenuPrincipal:
                                               command=lambda: cambiarPantallas(self, "agregar alumno"))
             self.boton_salir = Button(self.frame, text="Cerrar Sesion", command=lambda: cambiarPantallas(self,"login"))
             self.boton_tablaUsarios = Button(self.frame, text="Tabla Usuarios", command=lambda: TablaUsuarios(basedatos))
-            self.boton_eliminarUsuario = Button(self.frame, text="Eliminar Usuarios")
+            self.boton_consultar_notas= Button(self.frame,text="Consultar Notas", command=lambda: cambiarPantallas(self,"materias"))
 
-            self.boton_eliminarUsuario.pack(side=TOP)
             self.boton_agregar_usuario.pack(side=TOP)
             self.boton_tablaUsarios.pack(side=TOP)
             self.boton_AgregarAlumno.pack(side=TOP)
             self.boton_listar_alumnos.pack(side=TOP)
+            self.boton_consultar_notas.pack(side=TOP)
 
 
 class VentanaAltaAlumno:
@@ -96,13 +100,13 @@ class VentanaAltaAlumno:
         self.frame.pack()
 
         # variables
-        self.nroregistro = basedatos.getCantidadAlumnos() + 1
+        self.nroregistro = IntVar()
         self.nombre = StringVar()
         self.apellido = StringVar()
         self.dni = IntVar()
         self.telefono = IntVar()
         self.fechaNacimiento = StringVar()
-        self.email = StringVar()
+        self.email1 = StringVar()
         self.año = IntVar()
         self.fechaAlta = StringVar()
         self.fechaBaja = StringVar()
@@ -112,7 +116,7 @@ class VentanaAltaAlumno:
         self.concepto = StringVar()
 
         # Creamos las etiquetas
-
+        self.label_nro_registro = Label(self.frame, text="Registro:")
         self.label_nombre = Label(self.frame, text="Nombre:")
         self.label_apellido = Label(self.frame, text="Apellido:")
         self.label_dni = Label(self.frame, text="DNI:")
@@ -126,13 +130,14 @@ class VentanaAltaAlumno:
         self.label_inasistencias = Label(self.frame, text="Inasistencias:")
 
         # Creacion de los campos de texto
-
+        self.texto_nro_registro = Entry(self.frame, textvariable=self.nroregistro, width=30)
+        self.texto_nro_registro.config(state="disabled")
         self.texto_nombre = Entry(self.frame, textvariable=self.nombre, width=30)
         self.texto_apellido = Entry(self.frame, textvariable=self.apellido, width=30)
         self.texto_dni = Entry(self.frame, textvariable=self.dni, width=30)
         self.texto_telefono = Entry(self.frame, textvariable=self.telefono, width=30)
         self.texto_fecha = Entry(self.frame, textvariable=self.fechaNacimiento, width=30)
-        self.texto_email = Entry(self.frame, textvariable=self.email, width=30)
+        self.texto_email = Entry(self.frame, textvariable=self.email1, width=30)
         self.texto_año = Entry(self.frame, textvariable=self.año, width=30)
         self.texto_a_fecha = Entry(self.frame, textvariable=self.fechaAlta, width=30)
         self.texto_usuario = Entry(self.frame, textvariable=self.usuario, width=30)
@@ -144,13 +149,21 @@ class VentanaAltaAlumno:
         self.boton_aceptar = Button(self.frame, text="Aceptar",
                                     command=lambda: AAlumno(basedatos, self.nroregistro, self.nombre.get(),
                                                             self.apellido.get(), self.dni.get(), self.telefono.get()
-                                                            , self.fechaNacimiento.get(), self.email.get(),
+                                                            , self.fechaNacimiento.get(), self.email1.get(),
                                                             self.año.get(), self.fechaAlta.get(), self.fechaBaja.get()
                                                             , self.usuario.get(), self.inasistencias.get(),
                                                             self.concepto.get()))
         self.boton_modificar = Button(self.frame, text="Modificar", command=lambda: print(self.nombre.get()))
         self.boton_elimiar = Button(self.frame, text="eliminar")
         self.boton_back = Button(self.frame, text="Atras", command=lambda: cambiarPantallas(self, "menu principal",2))
+        self.boton_consulta = Button(self.frame, text="Consulta", command= lambda:self.setearTexto(self.nroregistro.get()))
+
+        self.boton_consulta.pack(side=RIGHT)
+
+        self.label_nro_registro.pack(side=TOP)
+        self.texto_nro_registro.pack(side=TOP)
+
+
 
         self.label_nombre.pack(side=TOP)
         self.texto_nombre.pack(side=TOP)
@@ -191,6 +204,27 @@ class VentanaAltaAlumno:
         self.boton_elimiar.pack(side=RIGHT)
 
 
+    def setearTexto(self,nro_registro):
+        if(nro_registro==0):
+            self.texto_nro_registro.config(state="normal")
+        else:
+            a = Alumnos()
+            a = CAlumno(basedatos,nro_registro)
+            self.nroregistro.set(a.getNroregistro())
+            self.nombre.set(a.getnombre())
+            self.apellido.set(a.getApellido())
+            self.dni.set(a.getDni())
+            self.telefono.set(a.getTelefono())
+            self.email.set(a.getEmail())
+            self.fechaNacimiento.set(a.getFecha())
+            self.fechaAlta.set(a.getFechaAlta())
+            self.fechaBaja.set(a.getFechaBaja())
+            self.usuario.set(a.getUsuario())
+            self.concepto.set(a.getConcepto())
+            self.inasistencias.set(a.getInasistencias())
+
+
+
 class VentanaUsuario:
     def __init__(self, padre):
         self.frame = Frame(padre)
@@ -207,7 +241,10 @@ class VentanaUsuario:
         self.contraseña = StringVar()
         self.contraseña2 = StringVar()
         self.opcion = IntVar()
+        self.opcion.set(-1)
+
         # se crean las cajas de entrada de texto.
+
         self.texto_nombre = Entry(self.frame, textvariable=self.usuario, width=30)
         self.texto_passw1 = Entry(self.frame, textvariable=self.contraseña, width=30, show="*")
         self.texto_passw2 = Entry(self.frame, textvariable=self.contraseña2, width=30, show="*")
@@ -221,7 +258,7 @@ class VentanaUsuario:
         self.boton_registrar = Button(self.frame, text="Registrar",
                                       command=(lambda :basedatos.RegUs(self.usuario.get(), self.contraseña.get(), self.opcion.get())))
         self.boton_cancelar = Button(self.frame, text="Cancelar", command=(lambda: cambiarPantallas(self,"menu principal",2)))
-        self.boton_eliminarUsuario = Button(self.frame, text="Eliminar Usuarios", command=(lambda:basedatos.ElimUs(self.usuario.get(),)))
+        self.boton_eliminarUsuario = Button(self.frame, text="Eliminar Usuarios", command=(lambda: basedatos.ElimUs(self.usuario.get())))
 
         # definimos las posiciones de los componentes.
         self.label_nombre_usuario.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
@@ -236,13 +273,82 @@ class VentanaUsuario:
 
         self.boton_registrar.pack(side=LEFT, fill=BOTH, expand=True, padx=5, pady=5)
         self.boton_cancelar.pack(side=RIGHT, fill=BOTH, expand=True, padx=5, pady=5)
-'''class ventanaEliminarUsuarios:
+        self.boton_eliminarUsuario.pack(side=RIGHT, fill=BOTH, expand=True, padx=5, pady=5)
+
+class VentanaMaterias:
     def __init__(self,padre):
         self.frame = Frame(padre)
-        self.frame.pack()
-        padre.title('Eliminar Usuario')
+        self.frame.grid()
+        padre.title('Materias')
 
-'''
+        # variables
+        self.registro=IntVar()
+        self.codigoMateria=IntVar()
+        self.nota1=IntVar()
+        self.nota2 = IntVar()
+        self.nota3 = IntVar()
+
+        # Labels
+        self.label_registro_alumno = Label(self.frame, text="Registro")
+        self.label_nombre_alumno = Label(self.frame,text="Alumno")
+        self.label_CodigoMateria = Label(self.frame, text="Codigo de Materia")
+        self.label_Materia1 = Label(self.frame,text="")
+        self.label_nota1 = Label(self.frame,text="nota 1")
+        self.label_nota2 = Label(self.frame, text="nota 2")
+        self.label_nota3 = Label(self.frame, text="nota 3")
+
+        # Campos de texto
+        self.texto_registro = Entry(self.frame, textvariable=self.registro, width=10)
+        self.texto_codigoMateria = Entry(self.frame, textvariable=self.codigoMateria, width=10)
+        self.texto_nota1 = Entry(self.frame, textvariable= self.nota1,width =10)
+        self.texto_nota2 = Entry(self.frame, textvariable=self.nota2,width =10)
+        self.texto_nota3 = Entry(self.frame, textvariable=self.nota3,width =10)
+
+        # Botones
+        self.boton_consultar = Button(self.frame,text="Consultar",width =15,command=lambda:self.setearTexto(self.registro.get(),self.codigoMateria.get()))
+        self.boton_cargar = Button(self.frame, text="Cargar Notas",width =15,command=lambda: self.setNotas(self.registro.get(), self.codigoMateria.get(), self.nota1.get(), self.nota2.get(), self.nota3.get()))
+
+        # posiciones
+        self.label_registro_alumno.grid(row=0,column =1)
+        self.texto_registro.grid(row=0,column=2)
+        self.label_CodigoMateria.grid(row=2,column=1,)
+        self.texto_codigoMateria.grid(row=2,column=2)
+        self.label_nombre_alumno.grid(row=4,column=1)
+        self.label_Materia1.grid(row=4,column=2)
+        self.label_nota1.grid(row=7,column=1)
+        self.label_nota2.grid(row=8,column=1)
+        self.label_nota3.grid(row=9,column=1)
+        self.texto_nota1.grid(row=7,column=2)
+        self.texto_nota2.grid(row=8,column=2)
+        self.texto_nota3.grid(row=9,column=2)
+
+        self.boton_consultar.grid(row=1,column=5)
+        self.boton_cargar.grid(row=10,column=5)
+
+    def setearTexto(self, nro_registro,codigo_materia):
+        m = Materia()
+
+        tabla = basedatos.getTablaMaterias()
+
+        m = tabla.ConsultaMat(nro_registro,codigo_materia)
+        self.label_Materia1.config(text=m.getnombre())
+
+        self.nota1.set(m.getnota1())
+        self.nota1.set(m.getNota2())
+        self.nota1.set(m.getNota3())
+
+    def setNotas(self,nro_registro,codigo,nota1,nota2,nota3):
+
+        tabla = basedatos.getTablaMaterias()
+        m = tabla.ConsultaMat(nro_registro, codigo)
+        m.setNota1(nota1)
+        m.setNota2(nota2)
+        m.setNota3(nota3)
+        tabla.ModificacionMat(m)
+        basedatos.setTablaMaterias(tabla)
+
+
+
 root = Tk()
 Login(root)
 root.mainloop()

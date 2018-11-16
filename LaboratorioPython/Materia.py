@@ -1,7 +1,8 @@
 
 class Materia():
-    def __init__(self,nombre=" ", nota1="0",nota2="0",nota3="0", codigo="0"):
+    def __init__(self,nombre=" ", nota1="0",nota2="0",nota3="0", codigo="0",codigoAlumno=0):
         self.__nombre = nombre
+        self.__codigoAlumno= codigoAlumno
         self.__nota1=nota1
         self.__nota2 = nota2
         self.__nota3 = nota3
@@ -36,5 +37,12 @@ class Materia():
 
     def setCodigo(self,codigo):
         self.__codigo=codigo
+
+    def getCodigoAlumno(self):
+        return self.__codigoAlumno
+
+    def setCodigoAlumno(self,codigoAlumno):
+        self.__codigo=codigoAlumno
+
 
 
