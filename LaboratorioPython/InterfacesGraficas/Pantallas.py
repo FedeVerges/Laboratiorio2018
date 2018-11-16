@@ -6,16 +6,16 @@ from LaboratorioPython.Funcionalidades import *
 basedatos = BD_Escuela()
 basedatos.RegUs("fede","1234",2)
 
-a = Alumnos(3500,"juan","perez",41221770,2664372050,"armando@jofre@gmail.com","16/06/1998",4,"2005","0","juan","MA",10)
-a2 = Alumnos(1200,"jose","Di Marco","3028516",1155664461,"j_Dmarco@mail.com","16/09,1935",1,"2003","0","jose35","NA",10)
+a = Alumnos(0,"juan","perez",41221770,2664372050,"armando@jofre@gmail.com","16/06/1998",4,"2005","0","juan","MA",10)
+a2 = Alumnos(0,"jose","Di Marco",3028516,1155664461,"j_Dmarco@mail.com","16/09,1935",1,"2003","0","jose35","NA",10)
 basedatos.AltaAlumnoBaseDatos(a)
 basedatos.AltaAlumnoBaseDatos(a2)
 
-m = [Materia("Matematicas", 0, 0, 0, 1,1200), Materia("Lengua", 0, 0, 0, 2,1200),
-                           Materia("Física", 0, 0, 0, 3,1200),Materia("Química", 0, 0, 0, 4,1200),
-                           Materia("Biología", 0, 0, 0, 5,1200),Materia("Etica", 0, 0, 0, 6,1200),
-                           Materia("Geología", 0, 0, 0, 8,1200),Materia("Historia", 0, 0, 0, 7,1200),
-                           Materia("Computacion", 0, 0, 0, 9,1200)]
+m = [Materia("Matematicas", 0, 0, 0, 1,1), Materia("Lengua", 0, 0, 0, 2,1),
+                           Materia("Física", 0, 0, 0, 3,1),Materia("Química", 0, 0, 0, 4,1),
+                           Materia("Biología", 0, 0, 0, 5,1),Materia("Etica", 0, 0, 0, 6,1),
+                           Materia("Geología", 0, 0, 0, 8,1),Materia("Historia", 0, 0, 0, 7,1),
+                           Materia("Computacion", 0, 0, 0, 9,1)]
 tabla = T_Materias()
 tabla.serListaMaterias(m)
 basedatos.setTablaMaterias(tabla)
@@ -39,6 +39,8 @@ def cambiarPantallas(ventana, tipoVentana, tipoUsuario=-1):
         Login(root)
     elif tipoVentana=="materias":
         VentanaMaterias(root,tipoUsuario)
+    elif tipoVentana=="legajo":
+        Legajo(root,tipoUsuario)
 
 
 
@@ -89,6 +91,7 @@ class MenuPrincipal:
     def __init__(self, padre, tipoUsuario):
         self.frame = Frame(padre)
         self.frame.pack()
+        padre.geometry("600x600")
         padre.title("MENU PRINCIPAL")
 
         # Funcionaliddades Programador
@@ -101,7 +104,11 @@ class MenuPrincipal:
             self.boton_salir = Button(self.frame, text="Cerrar Sesion", command=lambda: cambiarPantallas(self,"login"))
             self.boton_tablaUsarios = Button(self.frame, text="Tabla Usuarios", command=lambda: TablaUsuarios(basedatos))
             self.boton_consultar_notas= Button(self.frame,text="Consultar Notas", command=lambda: cambiarPantallas(self,"materias",tipoUsuario))
-            self.boton_listado_materias = Button(self.frame, text="Listado Materias", command=lambda: tablaMaterias(basedatos))
+            self.boton_listado_materias = Button(self.frame, text="Listado Materias", command=lambda: ListMat(basedatos))
+            self.boton_legajo = Button(self.frame,text="Legajo",command=lambda: cambiarPantallas(self,"legajo",tipoUsuario))
+            self.boton_Backup = Button(self.frame, text="BackUP",
+                                       command=lambda: BackUpBD(basedatos))
+
 
 
 
@@ -111,6 +118,8 @@ class MenuPrincipal:
             self.boton_listar_alumnos.pack(side=TOP)
             self.boton_consultar_notas.pack(side=TOP)
             self.boton_listado_materias.pack(side=TOP)
+            self.boton_legajo.pack(side=TOP)
+            self.boton_Backup.pack(side=TOP)
 
 
 class VentanaAltaAlumno:
@@ -235,7 +244,7 @@ class VentanaAltaAlumno:
             self.apellido.set(a.getApellido())
             self.dni.set(a.getDni())
             self.telefono.set(a.getTelefono())
-            self.email.set(a.getEmail())
+            self.email1.set(a.getEmail())
             self.fechaNacimiento.set(a.getFecha())
             self.fechaAlta.set(a.getFechaAlta())
             self.fechaBaja.set(a.getFechaBaja())
@@ -328,6 +337,8 @@ class VentanaMaterias:
         self.boton_consultar = Button(self.frame,text="Consultar",width =15,command=lambda:self.setearTexto(self.registro.get(),self.codigoMateria.get()))
         self.boton_cargar = Button(self.frame, text="Cargar Notas",width =15,command=lambda: self.setNotas(self.registro.get(), self.codigoMateria.get(), self.nota1.get(), self.nota2.get(), self.nota3.get()))
         self.boton_back = Button(self.frame,text="Volver",width =15,command=lambda:cambiarPantallas(self,"menu principal",tipoUsuario))
+        self.boton_eliminar = Button(self.frame, text="Reset",width =15,command =lambda : self.setNotas(self.registro.get(), self.codigoMateria.get()))
+
         # posiciones
         self.label_registro_alumno.grid(row=0,column =1)
         self.texto_registro.grid(row=0,column=2)
@@ -345,6 +356,7 @@ class VentanaMaterias:
         self.boton_consultar.grid(row=1,column=5)
         self.boton_cargar.grid(row=10,column=1)
         self.boton_back.grid(row=10,column=5)
+        self.boton_eliminar.grid(row=10,column=3)
 
     def setearTexto(self, nro_registro,codigo_materia):
         m = Materia()
@@ -358,7 +370,7 @@ class VentanaMaterias:
         self.nota1.set(m.getNota2())
         self.nota1.set(m.getNota3())
 
-    def setNotas(self,nro_registro,codigo,nota1,nota2,nota3):
+    def setNotas(self,nro_registro,codigo,nota1=0,nota2=0,nota3=0):
 
         tabla = basedatos.getTablaMaterias()
         m = tabla.ConsultaMat(nro_registro, codigo)
@@ -367,6 +379,100 @@ class VentanaMaterias:
         m.setNota3(nota3)
         tabla.ModificacionMat(m)
         basedatos.setTablaMaterias(tabla)
+
+class Legajo:
+    def __init__(self,padre,tipoUsuario):
+        self.frame = Frame(padre)
+        self.frame.grid()
+        padre.title('Legajo')
+
+        # variables
+        self.dni = IntVar()
+
+        # label
+
+        self.label_dni = Label(self.frame,text="Ingrese el dni")
+        self.label_registro_alumno = Label(self.frame, text="Legajo")
+        self.label_Materia1 = Label(self.frame, text="Nombre de la Materia")
+        self.label_nota1 = Label(self.frame, text="nota 1")
+        self.label_nota2 = Label(self.frame, text="nota 2")
+        self.label_nota3 = Label(self.frame, text="nota 3")
+
+        # texto
+
+        self.t_dni = Entry(self.frame, textvariable= self.dni,width =10)
+
+        # boton
+        self.boton_legajo= Button(self.frame,text="Buscar Legajo",command=lambda :self.LisLegA(self.dni.get()))
+        self.boton_back = Button(self.frame, text="Volver",command=lambda:cambiarPantallas(self,"menu principal",tipoUsuario))
+        # listBox
+
+        self.l_alumno = Listbox(self.frame, width=20, height=15)
+        self.l_materias = Listbox(self.frame, width=20, height=15)
+        self.l_nota1 = Listbox(self.frame, width=10, height=15)
+        self.l_nota2 = Listbox(self.frame, width=10, height=15)
+        self.l_nota3 = Listbox(self.frame, width=10, height=15)
+
+        self.label_dni.grid(row=0,column=1)
+        self.t_dni.grid(row=0, column=2)
+
+        self.label_registro_alumno.grid(row=1,column=1)
+        self.label_Materia1.grid(row=1, column=2)
+        self.label_nota1.grid(row=1, column=3)
+        self.label_nota2.grid(row=1, column=4)
+        self.label_nota3.grid(row=1, column=5)
+
+        self.boton_legajo.grid(row=0,column=3)
+        self.boton_back.grid(row=3,column=6)
+
+        self.l_alumno.grid(row=2,column=1)
+        self.l_materias.grid(row=2,column=2)
+        self.l_nota1.grid(row=2,column=3)
+        self.l_nota2.grid(row=2,column=4)
+        self.l_nota3.grid(row=2,column=5)
+
+
+
+
+    def LisLegA(self,dni):
+
+            self.tabla = basedatos.getTablaAlumnos()
+            print(dni)
+
+            self.a = self.tabla.legajo(dni)
+
+            print(self.a)
+
+            # Listbox alumno
+
+
+            self.l_alumno.insert(0, self.a.getNroregistro())
+            self.l_alumno.insert(1, self.a.getnombre() + self.a.getApellido())
+            self.l_alumno.insert(2, self.a.getDni())
+            self.l_alumno.insert(3, self.a.getTelefono())
+            self.l_alumno.insert(4, self.a.getFecha())
+            self.l_alumno.insert(5, self.a.getEmail())
+            self.l_alumno.insert(6, self.a.getAño())
+            self.l_alumno.insert(7, self.a.getFechaAlta())
+            self.l_alumno.insert(8, self.a.getFechaBaja())
+            self.l_alumno.insert(9, self.a.getUsuario())
+            self.l_alumno.insert(10, self.a.getInasistencias())
+            self.l_alumno.insert(11, self.a.getConcepto())
+
+            self.tabla= basedatos.getTablaMaterias()
+            self.lista = self.tabla.ConsultLegajo(self.a.getNroregistro())
+
+
+            for i in self.lista:
+                self.l_materias.insert(0, i.getnombre())
+                self.l_nota1.insert(0, i.getnota1())
+                self.l_nota2.insert(0, i.getNota2())
+                self.l_nota3.insert(0, i.getNota3())
+
+
+
+# def cargarBD(archivoAlumno,ArchivoMateria):
+
 
 
 

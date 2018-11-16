@@ -36,6 +36,14 @@ class T_Alumnos:
             if NroRegistro == i.getNroregistro():
                 return i
 
+    def legajo(self,dni):
+        alumnos = list(filter(lambda x: x.getDni()==dni, self.__listaAlumnos))
+        if alumnos ==[]:
+            return False
+        else:
+            return alumnos[0]
+
+
 
 
     def getListaAlumnos(self):
@@ -70,6 +78,10 @@ class T_Materias:
                 return i
             else:
                 print("el alumno no tiene materias")
+
+    def ConsultLegajo(self,nro_registro):
+        lista = list(filter(lambda x: x.getCodigoAlumno() == nro_registro, self.__listaMaterias))
+        return lista
 
 
 

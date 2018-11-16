@@ -32,7 +32,7 @@ def BackAlumnos(baseDatos=BD_Escuela()):
     for a in listaAlumnos:
         archivo.write("---------------------------------- \n")
         archivo.write("Alumno n°" + str(a.getNroregistro()) + "\n")
-        archivo.write("Nombre:" + str(a.getnombre) + "\n")
+        archivo.write("Nombre:" + str(a.getnombre()) + "\n")
         archivo.write("Apellido:" + str(a.getApellido()) + "\n")
         archivo.write("Dni:" + str(a.getDni()) + "\n")
         archivo.write("Telefono:" + str(a.getTelefono()) + "\n")
@@ -46,18 +46,28 @@ def BackAlumnos(baseDatos=BD_Escuela()):
         archivo.write("Inasistencias:" + str(a.getInasistencias()) + "\n")
     archivo.close()
 
-
-"""
-def BackMaterias(baseDatos = BD_Escuela())
-    tabla_materias = baseDatos.getTablaMaterias()
-    lista_materias = tabla_materias.getListaMaterias()
+def BackMaterias(tabla):
+    listaMaterias = tabla.getListaMaterias()
     archivo = open("Materias.txt","w")
-    for m in lista_materias:
+
+    for m in listaMaterias:
         archivo.write("---------------------------------- \n")
-        archivo.write("Nombre:" + str(m.getnombre())+"\n")
+        archivo.write("Materia n°" + str(m.getCodigo()) + "\n")
         archivo.write("Nombre:" + str(m.getnombre()) + "\n")
-        
-"""
+        archivo.write("Nro Registro de Alumno:" + str(m.getCodigoAlumno()) + "\n")
+        archivo.write("nota 1:" + str(m.getnota1()) + "\n")
+        archivo.write("nota 2:" + str(m.getNota2()) + "\n")
+        archivo.write("nota 3:" + str(m.getNota3()) + "\n")
+
+    archivo.close()
+
+
+def BackUpBD(bd):
+    BackAlumnos(bd)
+
+    BackMaterias(bd.getTablaMaterias())
+
+
 
 
 def LisTAlu(bd=BD_Escuela()):
@@ -100,7 +110,7 @@ def LisTAlu(bd=BD_Escuela()):
 
     for item in t_alumnos.getListaAlumnos():
         l_nroregistro.insert(0, item.getNroregistro())
-        l_nombres.insert(0, item.getnombre( ) +"  " +item.getApellido())
+        l_nombres.insert(0, item.getnombre() +"  " +item.getApellido())
         l_dni.insert(0, item.getDni())
         l_telefono.insert(0, item.getTelefono())
         l_fecha.insert(0, item.getFecha())
@@ -181,7 +191,7 @@ def TablaUsuarios(bd=BD_Escuela()):
 
     root.mainloop()
 
-def tablaMaterias(base_datos=BD_Escuela()):
+def ListMat(base_datos=BD_Escuela()):
 
     root = Tk()
     root.title("Listado de Alumnos")

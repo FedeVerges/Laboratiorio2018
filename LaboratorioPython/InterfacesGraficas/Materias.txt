@@ -1,0 +1,63 @@
+---------------------------------- 
+Materia n°1
+Nombre:Matematicas
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°2
+Nombre:Lengua
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°3
+Nombre:Física
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°4
+Nombre:Química
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°5
+Nombre:Biología
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°6
+Nombre:Etica
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°8
+Nombre:Geología
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°7
+Nombre:Historia
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
+---------------------------------- 
+Materia n°9
+Nombre:Computacion
+Nro Registro de Alumno:1
+nota 1:0
+nota 2:0
+nota 3:0
