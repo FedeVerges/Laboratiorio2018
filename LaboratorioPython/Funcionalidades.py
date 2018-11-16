@@ -194,7 +194,7 @@ def TablaUsuarios(bd=BD_Escuela()):
 def ListMat(base_datos=BD_Escuela()):
 
     root = Tk()
-    root.title("Listado de Alumnos")
+    root.title("Listado de Materias")
     root.geometry('600x600')
     tabla = T_Materias()
     tabla = base_datos.getTablaMaterias()
@@ -216,6 +216,7 @@ def ListMat(base_datos=BD_Escuela()):
     l_nota3 = Listbox(root, width=10, height=15)
 
     for item in tabla.getListaMaterias():
+        print("asdasdasdasddas")
         l_registro.insert(0, item.getCodigoAlumno())
         l_codigo_materia.insert(0, item.getCodigo())
         l_materia.insert(0, item.getnombre())
@@ -353,6 +354,18 @@ def AAlumno(bdatos,nroRegistro=0 ,nombre="defecto" ,apellido="" ,dni=55 ,telefon
     else:
         error = messagebox.showerror("Error Registro" ,"Ya existe un alumno en la base de datos")
 
+def MAlumno(bdatos,nroRegistro=0 ,nombre="defecto" ,apellido="" ,dni=55 ,telefono=0 ,fecha=0 ,email="" ,año=0
+            ,fechaAlta=0 ,fechaBaja=0 ,usuario="" ,concepto="" ,inasistencias=0):
+
+    a = Alumnos(nroRegistro,nombre, apellido, dni, telefono, email, fecha, año, fechaAlta, fechaBaja,usuario
+                , concepto, inasistencias)
+    print(a.getEmail())
+    if bdatos.modificarAlumno(a):
+        mensaje = messagebox.showinfo("Alumno Cargado"
+                                      ,"El alumno: " +a.getnombre( ) +a.getApellido( ) +" \n ha sido cargado exitosamente")
+    else:
+        error = messagebox.showerror("Error Registro" ,"Ya existe un alumno en la base de datos")
+
 
 def CAlumno(bdatos=BD_Escuela(),nro_registro=0):
     tabla = bdatos.getTablaAlumnos()
@@ -360,6 +373,9 @@ def CAlumno(bdatos=BD_Escuela(),nro_registro=0):
     a = tabla.ConsultaAlumno(nro_registro)
     return a
 
+def EAlumno(bdatos=BD_Escuela(), nro_registro=0):
+    bdatos.BajaAlumno(nro_registro)
+    print("exito")
 
 
 

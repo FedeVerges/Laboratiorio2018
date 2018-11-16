@@ -1,4 +1,5 @@
 from LaboratorioPython.Alumnos import Alumnos
+from LaboratorioPython.Materia import Materia
 from LaboratorioPython.Tablas import T_Alumnos,T_Materias
 from tkinter import messagebox
 
@@ -68,7 +69,6 @@ class BD_Escuela():
             del self.__acceso["A-"+nombre]
             messagebox.showinfo("Usuario eliminado", "Se ha eliminado el usuario con exito")
 
-
     def getAcceso(self):
         return self.__acceso
 
@@ -88,12 +88,33 @@ class BD_Escuela():
         self.__tablas[self.__NbreTablas["T_Materias"]]=tabla
 
     def AltaAlumnoBaseDatos(self,a=Alumnos()):
-        a.setNroregsitro(self.__cant_usuarios + 1)
+        nroRegistro=self.__cant_usuarios + 1
+        a.setNroregsitro(nroRegistro)
         if self.__tablas[self.__NbreTablas["T_Alumnos"]].AltaAlumno(a):
             self.RegUs(a.getnombre(),a.getDni(),0)
+
+            m = [Materia("Matematicas", 0, 0, 0, 1, nroRegistro), Materia("Lengua", 0, 0, 0, 2, nroRegistro),
+                 Materia("Física", 0, 0, 0, 3, nroRegistro), Materia("Química", 0, 0, 0, 4, nroRegistro),
+                 Materia("Biología", 0, 0, 0, 5, nroRegistro), Materia("Etica", 0, 0, 0, 6, nroRegistro),
+                 Materia("Geología", 0, 0, 0, 7, nroRegistro), Materia("Historia", 0, 0, 0, 8, nroRegistro),
+                 Materia("Computacion", 0, 0, 0, 9, nroRegistro)]
+            for i in m:
+                self.__tablas[self.__NbreTablas["T_Materias"]].AltaMat(i)
+
+
+
+
             return True
         else:
             return False
 
+    def modificarAlumno(self,a=Alumnos()):
+        self.__tablas[self.__NbreTablas["T_Alumnos"]].ModificacionAlumno(a)
+
+
+
+    def BajaAlumno(self,nroRegistro):
+        if self.__tablas[self.__NbreTablas["T_Alumnos"]].BajaAlumno(nroRegistro):
+            self.__tablas[self.__NbreTablas["T_Materias"]].BajaMat(nroRegistro)
 
 

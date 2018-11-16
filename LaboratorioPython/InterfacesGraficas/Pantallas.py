@@ -11,14 +11,6 @@ a2 = Alumnos(0,"jose","Di Marco",3028516,1155664461,"j_Dmarco@mail.com","16/09,1
 basedatos.AltaAlumnoBaseDatos(a)
 basedatos.AltaAlumnoBaseDatos(a2)
 
-m = [Materia("Matematicas", 0, 0, 0, 1,1), Materia("Lengua", 0, 0, 0, 2,1),
-                           Materia("Física", 0, 0, 0, 3,1),Materia("Química", 0, 0, 0, 4,1),
-                           Materia("Biología", 0, 0, 0, 5,1),Materia("Etica", 0, 0, 0, 6,1),
-                           Materia("Geología", 0, 0, 0, 8,1),Materia("Historia", 0, 0, 0, 7,1),
-                           Materia("Computacion", 0, 0, 0, 9,1)]
-tabla = T_Materias()
-tabla.serListaMaterias(m)
-basedatos.setTablaMaterias(tabla)
 
 
 
@@ -48,6 +40,7 @@ class Login:
     def __init__(self, padre):
         self.frame = Frame(padre)
         self.frame.pack()
+        padre.geometry("400x300")
         padre.title('Bienvendo al Sistema de Alumnos')
 
         # Se definen los labels de las cajas de texto
@@ -120,11 +113,13 @@ class MenuPrincipal:
             self.boton_listado_materias.pack(side=TOP)
             self.boton_legajo.pack(side=TOP)
             self.boton_Backup.pack(side=TOP)
+            self.boton_salir.pack(side=RIGHT)
 
 
 class VentanaAltaAlumno:
     def __init__(self, padre):
         self.frame = Frame(padre)
+        padre.geometry("400x800")
         padre.title("Alta Alumno")
         self.frame.pack()
 
@@ -176,14 +171,20 @@ class VentanaAltaAlumno:
         # Creacion de botones
 
         self.boton_aceptar = Button(self.frame, text="Aceptar",
-                                    command=lambda: AAlumno(basedatos, self.nroregistro, self.nombre.get(),
+                                    command=lambda: AAlumno(basedatos, self.nroregistro.get(), self.nombre.get(),
                                                             self.apellido.get(), self.dni.get(), self.telefono.get()
                                                             , self.fechaNacimiento.get(), self.email1.get(),
                                                             self.año.get(), self.fechaAlta.get(), self.fechaBaja.get()
                                                             , self.usuario.get(), self.inasistencias.get(),
                                                             self.concepto.get()))
-        self.boton_modificar = Button(self.frame, text="Modificar", command=lambda: print(self.nombre.get()))
-        self.boton_elimiar = Button(self.frame, text="eliminar")
+        self.boton_modificar = Button(self.frame, text="Modificar", command=lambda: MAlumno(basedatos, self.nroregistro.get(), self.nombre.get(),
+                                                            self.apellido.get(), self.dni.get(), self.telefono.get()
+                                                            , self.fechaNacimiento.get(), self.email1.get(),
+                                                            self.año.get(), self.fechaAlta.get(), self.fechaBaja.get()
+                                                            , self.usuario.get(), self.inasistencias.get(),
+                                                            self.concepto.get()))
+
+        self.boton_elimiar = Button(self.frame, text="eliminar", command=lambda: EAlumno(basedatos,self.nroregistro.get()))
         self.boton_back = Button(self.frame, text="Atras", command=lambda: cambiarPantallas(self, "menu principal",2))
         self.boton_consulta = Button(self.frame, text="Consulta", command= lambda:self.setearTexto(self.nroregistro.get()))
 
@@ -230,11 +231,12 @@ class VentanaAltaAlumno:
         self.boton_aceptar.pack(side=LEFT)
         self.boton_modificar.pack(side=LEFT)
         self.boton_back.pack(side=RIGHT)
-        self.boton_elimiar.pack(side=RIGHT)
+        self.boton_elimiar.pack(side=LEFT)
 
 
     def setearTexto(self,nro_registro):
-        if(nro_registro==0):
+
+        if nro_registro==0:
             self.texto_nro_registro.config(state="normal")
         else:
             a = Alumnos()
@@ -251,7 +253,6 @@ class VentanaAltaAlumno:
             self.usuario.set(a.getUsuario())
             self.concepto.set(a.getConcepto())
             self.inasistencias.set(a.getInasistencias())
-
 
 
 class VentanaUsuario:

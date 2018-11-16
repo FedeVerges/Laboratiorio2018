@@ -19,17 +19,26 @@ class T_Alumnos:
             return False
 
     def BajaAlumno(self,NroRegistro):
-        for i in self.__listaAlumnos:
-            if NroRegistro == i.getNroregistro():
-                self.__listaAlumnos.remove(i)
+        lista=list(filter(lambda x: x.getNroregistro()==NroRegistro,self.__listaAlumnos))
+        if lista ==[]:
+            return False
+        else:
+            lista[0].getNroregistro()
+            self.__listaAlumnos.remove(lista[0])
+            return True
+
+
+        # eliminar materias
 
     def ModificacionAlumno(self,a = Alumnos()):
         for al in self.__listaAlumnos:
             if a.getNroregistro() == al.getNroregistro():
                 self.__listaAlumnos[self.__listaAlumnos.index(al)] = a
+                return True
             else:
                 error = "no existe un usuario con ese nombre"
                 print(error)
+                return False
 
     def ConsultaAlumno(self,NroRegistro):
         for i in self.__listaAlumnos:
@@ -37,7 +46,7 @@ class T_Alumnos:
                 return i
 
     def legajo(self,dni):
-        alumnos = list(filter(lambda x: x.getDni()==dni, self.__listaAlumnos))
+        alumnos = list(filter(lambda x: x.getDni()== dni, self.__listaAlumnos))
         if alumnos ==[]:
             return False
         else:
@@ -60,11 +69,11 @@ class T_Materias:
     def AltaMat(self, m = Materia()):
         self.__listaMaterias.append(m)
 
-    def BajaMat(self,nombre):
-        for i in self.__listaMaterias:
-            if nombre == i.getnombre():
-                self.__listaMaterias.remove(i)
-
+    def BajaMat(self,nro_registro):
+        lista = list(filter(lambda x: x.getCodigoAlumno()==nro_registro, self.__listaMaterias))
+        for i in lista:
+            self.__listaMaterias.remove(i)
+            print("borrado")
     def ModificacionMat(self,m = Materia()):
         for i in self.__listaMaterias:
             if m.getCodigo() == i.getCodigo():
@@ -78,6 +87,7 @@ class T_Materias:
                 return i
             else:
                 print("el alumno no tiene materias")
+
 
     def ConsultLegajo(self,nro_registro):
         lista = list(filter(lambda x: x.getCodigoAlumno() == nro_registro, self.__listaMaterias))
