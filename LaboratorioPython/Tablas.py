@@ -44,6 +44,8 @@ class T_Alumnos:
         for i in self.__listaAlumnos:
             if NroRegistro == i.getNroregistro():
                 return i
+            else:
+                return False
 
     def legajo(self,dni):
         alumnos = list(filter(lambda x: x.getDni()== dni, self.__listaAlumnos))
@@ -51,9 +53,6 @@ class T_Alumnos:
             return False
         else:
             return alumnos[0]
-
-
-
 
     def getListaAlumnos(self):
         return self.__listaAlumnos

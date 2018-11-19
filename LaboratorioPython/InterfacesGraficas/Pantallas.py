@@ -33,6 +33,8 @@ def cambiarPantallas(ventana, tipoVentana, tipoUsuario=-1):
         VentanaMaterias(root,tipoUsuario)
     elif tipoVentana=="legajo":
         Legajo(root,tipoUsuario)
+    elif tipoVentana=="backup":
+        pantallaArchivo(root,tipoUsuario)
 
 
 
@@ -100,7 +102,7 @@ class MenuPrincipal:
             self.boton_listado_materias = Button(self.frame, text="Listado Materias", command=lambda: ListMat(basedatos))
             self.boton_legajo = Button(self.frame,text="Legajo",command=lambda: cambiarPantallas(self,"legajo",tipoUsuario))
             self.boton_Backup = Button(self.frame, text="BackUP",
-                                       command=lambda: BackUpBD(basedatos))
+                                       command=lambda:cambiarPantallas(self,"backup",tipoUsuario))
 
 
 
@@ -241,18 +243,21 @@ class VentanaAltaAlumno:
         else:
             a = Alumnos()
             a = CAlumno(basedatos,nro_registro)
-            self.nroregistro.set(a.getNroregistro())
-            self.nombre.set(a.getnombre())
-            self.apellido.set(a.getApellido())
-            self.dni.set(a.getDni())
-            self.telefono.set(a.getTelefono())
-            self.email1.set(a.getEmail())
-            self.fechaNacimiento.set(a.getFecha())
-            self.fechaAlta.set(a.getFechaAlta())
-            self.fechaBaja.set(a.getFechaBaja())
-            self.usuario.set(a.getUsuario())
-            self.concepto.set(a.getConcepto())
-            self.inasistencias.set(a.getInasistencias())
+            if not a:
+                messagebox.showinfo("Alumno no existente","No Existe ese alumno en la base de datos")
+            else:
+                self.nroregistro.set(a.getNroregistro())
+                self.nombre.set(a.getnombre())
+                self.apellido.set(a.getApellido())
+                self.dni.set(a.getDni())
+                self.telefono.set(a.getTelefono())
+                self.email1.set(a.getEmail())
+                self.fechaNacimiento.set(a.getFecha())
+                self.fechaAlta.set(a.getFechaAlta())
+                self.fechaBaja.set(a.getFechaBaja())
+                self.usuario.set(a.getUsuario())
+                self.concepto.set(a.getConcepto())
+                self.inasistencias.set(a.getInasistencias())
 
 
 class VentanaUsuario:
@@ -287,10 +292,14 @@ class VentanaUsuario:
 
         self.boton_registrar = Button(self.frame, text="Registrar",
                                       command=(lambda :basedatos.RegUs(self.usuario.get(), self.contraseña.get(), self.opcion.get())))
+
         self.boton_cancelar = Button(self.frame, text="Cancelar", command=(lambda: cambiarPantallas(self,"menu principal",2)))
+
         self.boton_eliminarUsuario = Button(self.frame, text="Eliminar Usuarios", command=(lambda: basedatos.ElimUs(self.usuario.get())))
 
+
         # definimos las posiciones de los componentes.
+
         self.label_nombre_usuario.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         self.texto_nombre.pack(side=TOP, fill=X, expand=True, padx=5, pady=5)
         self.label_passw1.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
@@ -473,6 +482,34 @@ class Legajo:
 
 
 # def cargarBD(archivoAlumno,ArchivoMateria):
+
+class pantallaArchivo:
+    def __init__(self,padre,tipoUsuario):
+        self.frame = Frame(padre)
+        self.frame.pack()
+        padre.geometry("400x200")
+        padre.title('BackUp')
+
+        # Variables
+        self.archivo = StringVar()
+
+        #Label
+        self.label_nombre_archivo = Label(self.frame, text="Archivo")
+
+        #Texto
+        self.texto_archivo = Entry(self.frame, textvariable=self.archivo)
+
+        # Boton
+        self.boton_backup = Button(self.frame,text="Hacer BackUp",command=lambda:BackUpBD(basedatos,self.archivo.get()))
+        self.boton_back = Button(self.frame, text="Volver",command=lambda:cambiarPantallas(self,"menu principal",tipoUsuario))
+
+        #Posiciones
+        self.label_nombre_archivo.pack(side=LEFT)
+        self.texto_archivo.pack(side=LEFT)
+        self.boton_backup.pack(side=LEFT)
+        self.boton_back.pack(side=BOTTOM)
+
+
 
 
 

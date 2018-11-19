@@ -24,13 +24,24 @@ def validarLogin(nombre_u, passw, bdatos):
 
         return control
 
-
-def BackAlumnos(baseDatos=BD_Escuela()):
-    tabla_alumno = baseDatos.getTablaAlumnos()
+def BackUpBD(bd=BD_Escuela(),nombreArchivo=""):
+    tabla_alumno = bd.getTablaAlumnos()
+    tabla_materias = bd.getTablaMaterias()
     listaAlumnos = tabla_alumno.getListaAlumnos()
-    archivo = open("Alumnos.txt", "w")
+    listaMaterias = tabla_materias.getListaMaterias()
+    archivo = open(nombreArchivo, "w")
+
+
+    # BackUp datos Base de datos.
+    archivo.write("Cantidad de Usuarios:"+ str(bd.getCantidadAlumnos())+ "\n")
+    archivo.write("Acceso:"+ str(list(bd.getAcceso().items()))+ "\n")
+    archivo.write("Nombre de las tablas:"+str(list(bd.getNombreTablas().items()))+ "\n")
+
+    archivo.write("\n")
+    # BackUp de Alumnos
+
     for a in listaAlumnos:
-        archivo.write("---------------------------------- \n")
+        archivo.write("---- \n")
         archivo.write("Alumno n°" + str(a.getNroregistro()) + "\n")
         archivo.write("Nombre:" + str(a.getnombre()) + "\n")
         archivo.write("Apellido:" + str(a.getApellido()) + "\n")
@@ -44,14 +55,11 @@ def BackAlumnos(baseDatos=BD_Escuela()):
         archivo.write("Usuario:" + str(a.getUsuario()) + "\n")
         archivo.write("Concepto:" + str(a.getConcepto()) + "\n")
         archivo.write("Inasistencias:" + str(a.getInasistencias()) + "\n")
-    archivo.close()
 
-def BackMaterias(tabla):
-    listaMaterias = tabla.getListaMaterias()
-    archivo = open("Materias.txt","w")
-
+    # BackUp de Materias
+    archivo.write("\n")
     for m in listaMaterias:
-        archivo.write("---------------------------------- \n")
+        archivo.write("---- \n")
         archivo.write("Materia n°" + str(m.getCodigo()) + "\n")
         archivo.write("Nombre:" + str(m.getnombre()) + "\n")
         archivo.write("Nro Registro de Alumno:" + str(m.getCodigoAlumno()) + "\n")
@@ -61,12 +69,17 @@ def BackMaterias(tabla):
 
     archivo.close()
 
+    messagebox.showinfo("Backup","Se han guardado los datos exitosamente en "+ nombreArchivo)
 
-def BackUpBD(bd):
-    BackAlumnos(bd)
-
-    BackMaterias(bd.getTablaMaterias())
-
+'''
+def cargaArchivos(nombreArchivo,bd=BD_Escuela()):
+    file = open(nombreArchivo,"r")
+    texto= file.read()
+    lista = texto.split("\n\n")
+    datos_generales = str(lista[0]).split("\n")
+    cantidad_usuarios = int(datos_generales[0].split(":")[1])
+    acceso=
+'''
 
 
 

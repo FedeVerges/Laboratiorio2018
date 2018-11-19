@@ -75,6 +75,9 @@ class BD_Escuela():
     def getCantidadAlumnos(self):
         return self.__cant_usuarios
 
+    def getNombreTablas(self):
+        return self.__NbreTablas
+
     def getTablaAlumnos(self):
         return self.__tablas[self.__NbreTablas["T_Alumnos"]]
 
