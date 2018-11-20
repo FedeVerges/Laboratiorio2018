@@ -2,8 +2,8 @@ from LaboratorioPython.Materia import Materia
 
 
 class Alumnos:
-    def __init__(self, nroRegistro=0000, nombre="defectoasd", apellido="-", dni=123123123, telefono=0, email="-", fecha="-",
-                 año=0, fechaAlta="0", fechaBaja="0", usuario="-",concepto="A", inasistencias=" 0 "):
+    def __init__(self, nroRegistro=0000, nombre="defectoasd", apellido="-", dni=123123123, telefono=0, email="-", fecha="0",
+                 año=0, fechaAlta="0", fechaBaja="0", usuario="-",concepto="A", inasistencias=0):
         self.__Nro_Registro = nroRegistro
         self.__nombre = nombre
         self.__apellido = apellido
@@ -61,7 +61,7 @@ class Alumnos:
         self.__fecha = fecha
 
     def getAño(self):
-        return self.__fecha
+        return self.__año
 
     def setAño(self, año):
         self.__año = año
@@ -96,19 +96,5 @@ class Alumnos:
     def setInasistencias(self, inasistencias):
         self.__inasistencias = inasistencias
 
-    def getMateria(self):
-        return self.__materias
-'''
-    def setMateria(self):
-        self.__Materia.append(self, Materia("Matematicas", 0, 0, 0, 1))
-        self.__Materia.append(self, Materia("Lengua", 0, 0, 0, 2))
-        self.__Materia.append(self, Materia("Física", 0, 0, 0, 3))
-        self.__Materia.append(self, Materia("Química", 0, 0, 0, 4))
-        self.__Materia.append(self, Materia("Biología", 0, 0, 0, 5))
-        self.__Materia.append(self, Materia("Etica", 0, 0, 0, 6))
-        self.__Materia.append(self, Materia("Geología", 0, 0, 0, 8))
-        self.__Materia.append(self, Materia("Historia", 0, 0, 0, 7))
-        self.__Materia.append(self, Materia("Computacion", 0, 0, 0, 9))
-'''
 
 

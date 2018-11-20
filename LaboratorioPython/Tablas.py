@@ -63,7 +63,6 @@ class T_Alumnos:
 class T_Materias:
     def __init__(self):
         self.__listaMaterias=[Materia()]
-        self.__tabla={}
 
     def AltaMat(self, m = Materia()):
         self.__listaMaterias.append(m)
@@ -73,6 +72,7 @@ class T_Materias:
         for i in lista:
             self.__listaMaterias.remove(i)
             print("borrado")
+
     def ModificacionMat(self,m = Materia()):
         for i in self.__listaMaterias:
             if m.getCodigo() == i.getCodigo():
@@ -97,7 +97,7 @@ class T_Materias:
     def getListaMaterias(self):
         return self.__listaMaterias
 
-    def serListaMaterias(self, lista):
+    def setListaMaterias(self, lista):
         self.__listaMaterias= lista
 
 

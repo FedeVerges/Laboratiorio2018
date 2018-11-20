@@ -1,8 +1,8 @@
 Cantidad de Usuarios:2
-Acceso:dict_items([('P-fede', '1234'), ('A-juan', 41221770), ('A-jose', 3028516)])
-Nombre de las tablas:dict_items([('T_Alumnos', 0), ('T_Materias', 1)])
+Acceso:P-fede,1234 A-juan,41221770 A-jose,3028516 
+Nombre de las tablas:T_Alumnos,0 T_Materias,1 
 
----- 
+----
 Alumno n°1
 Nombre:juan
 Apellido:perez
@@ -10,154 +10,147 @@ Dni:41221770
 Telefono:2664372050
 Email:None
 Fecha de nacimiento:16/06/1998
-Año que cursa:16/06/1998
+Año que cursa:1
 Fecha de ingreso a la institución:2005
 Fecha de baja:0
 Usuario:juan
 Concepto:MA
 Inasistencias:10
----- 
+----
 Alumno n°2
 Nombre:jose
 Apellido:Di Marco
 Dni:3028516
 Telefono:1155664461
 Email:None
-Fecha de nacimiento:16/09,1935
-Año que cursa:16/09,1935
+Fecha de nacimiento:16/09/1935
+Año que cursa:1
 Fecha de ingreso a la institución:2003
 Fecha de baja:0
 Usuario:jose35
 Concepto:NA
 Inasistencias:10
 
----- 
-Materia n°0
-Nombre: 
-Nro Registro de Alumno:0
-nota 1:0
-nota 2:0
-nota 3:0
----- 
+----
 Materia n°1
 Nombre:Matematicas
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°2
 Nombre:Lengua
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°3
 Nombre:Física
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°4
 Nombre:Química
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°5
 Nombre:Biología
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°6
 Nombre:Etica
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°7
 Nombre:Geología
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°8
 Nombre:Historia
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°9
 Nombre:Computacion
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°1
 Nombre:Matematicas
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°2
 Nombre:Lengua
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°3
 Nombre:Física
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°4
 Nombre:Química
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°5
 Nombre:Biología
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°6
 Nombre:Etica
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°7
 Nombre:Geología
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°8
 Nombre:Historia
 Nro Registro de Alumno:2
 nota 1:0
 nota 2:0
 nota 3:0
----- 
+----
 Materia n°9
 Nombre:Computacion
 Nro Registro de Alumno:2
