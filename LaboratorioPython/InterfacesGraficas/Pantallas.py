@@ -3,7 +3,7 @@ from tkinter import ttk
 from LaboratorioPython.Funcionalidades import *
 
 basedatos = BD_Escuela()
-basedatos.RegUs("admin", "ad1", 2)
+basedatos.RegUs("admin", "ad1", 2,1)
 
 
 '''
@@ -38,18 +38,21 @@ def cambiarPantallas(ventana, tipoVentana, tipoUsuario=-1):
         pantallaArchivo(root, tipoUsuario)
     elif tipoVentana == "cargabd":
         pantallaArchivoCarga(root, tipoUsuario)
+    elif tipoVentana == "alumnosxcurso":
+        ventanaAlumnosxCurso(root,tipoUsuario)
 
 
 class Login:
     def __init__(self, padre):
         self.frame = Frame(padre)
+        self.frame.config(background='white')
         self.frame.pack()
         padre.geometry("400x300")
         padre.title('Bienvendo al Sistema de Alumnos')
 
         # Se definen los labels de las cajas de texto
-        self.lbl_nu = ttk.Label(self.frame, text="Ingrese Nombre Usuario:")
-        self.lbl_passw = ttk.Label(self.frame, text="Ingrese Contraseña:")
+        self.lbl_nu = ttk.Label(self.frame, text="Ingrese Nombre Usuario:",background='white')
+        self.lbl_passw = ttk.Label(self.frame, text="Ingrese Contraseña:",background='white')
 
         self.usuario = StringVar()
         self.contraseña = StringVar()
@@ -86,50 +89,125 @@ class Login:
 
 class MenuPrincipal:
     def __init__(self, padre, tipoUsuario):
+
         self.frame = Frame(padre)
-        self.frame.pack()
-        padre.geometry("600x600")
+        self.frame.grid()
+        self.frame.config(background='white')
+        padre.geometry("850x600")
+
         padre.title("MENU PRINCIPAL")
 
+        # Etiquetas
+        self.label_alumnos = Label(self.frame, text="Alumnos",fg="blue",font="Arial 16 bold",background='white')
+
+        self.label_materias = Label(self.frame, text="Materias",fg="blue",font="Arial 16 bold",background='white')
+
+
         # Funcionaliddades Programador
-        if tipoUsuario == 2:
+
+        self.label_Administrador = Label(self.frame, text="Administrador",background='white',fg="blue",font="Arial 16 bold")
+
+
+        if tipoUsuario == 2: # administrador
+
             self.boton_agregar_usuario = Button(self.frame, text="Agregar Usuario",
                                                 command=lambda: cambiarPantallas(self, "registrar usuario"))
+
             self.boton_listar_alumnos = Button(self.frame, text="Listar Alumnos", command=lambda: LisTAlu(basedatos))
+
             self.boton_AgregarAlumno = Button(self.frame, text="Agregar Alumnos",
                                               command=lambda: cambiarPantallas(self, "agregar alumno"))
+
             self.boton_salir = Button(self.frame, text="Cerrar Sesion", command=lambda: cambiarPantallas(self, "login"))
+
             self.boton_tablaUsarios = Button(self.frame, text="Tabla Usuarios",
                                              command=lambda: TablaUsuarios(basedatos))
+
             self.boton_consultar_notas = Button(self.frame, text="Consultar Notas",
                                                 command=lambda: cambiarPantallas(self, "materias", tipoUsuario))
             self.boton_listado_materias = Button(self.frame, text="Listado Materias",
                                                  command=lambda: ListMat(basedatos))
+
             self.boton_legajo = Button(self.frame, text="Legajo",
                                        command=lambda: cambiarPantallas(self, "legajo", tipoUsuario))
+
             self.boton_Backup = Button(self.frame, text="BackUP",
                                        command=lambda: cambiarPantallas(self, "backup", tipoUsuario))
+
             self.boton_cargabd = Button(self.frame, text="CargaBD",
                                         command=lambda: cambiarPantallas(self, "cargabd", tipoUsuario))
+            self.boton_readmision= Button(self.frame, text="Readmisión",command=lambda:ListInas(basedatos))
+            self.boton_reg_curso = Button(self.frame, text = "Registro por curso", command = lambda:cambiarPantallas(self,"alumnosxcurso",tipoUsuario))
 
-            self.boton_agregar_usuario.pack(side=TOP)
-            self.boton_tablaUsarios.pack(side=TOP)
-            self.boton_AgregarAlumno.pack(side=TOP)
-            self.boton_listar_alumnos.pack(side=TOP)
-            self.boton_consultar_notas.pack(side=TOP)
-            self.boton_listado_materias.pack(side=TOP)
-            self.boton_legajo.pack(side=TOP)
-            self.boton_Backup.pack(side=TOP)
-            self.boton_salir.pack(side=RIGHT)
-            self.boton_cargabd.pack(side=RIGHT)
+            self.label_Administrador.grid(row=0,column=0,padx=50,pady=20)
+            self.label_alumnos.grid(row=0,column=1,padx=50,pady=20)
+            self.label_materias.grid(row=0 ,column=2,padx=50,pady=20)
+
+            self.boton_agregar_usuario.grid(row=1,column=0,padx=50,pady=20)
+            self.boton_tablaUsarios.grid(row=2,column=0,padx=50,pady=20)
+            self.boton_AgregarAlumno.grid(row=3,column=0,padx=50,pady=20)
+            self.boton_listar_alumnos.grid(row=1,column=1,padx=50,pady=20)
+            self.boton_consultar_notas.grid(row=1,column=2,padx=50,pady=20)
+            self.boton_listado_materias.grid(row=2,column=2,padx=50,pady=20)
+            self.boton_legajo.grid(row=2,column=1,padx=50,pady=20)
+            self.boton_Backup.grid(row=4,column=0,padx=50,pady=20)
+            self.boton_salir.grid(row=0,column=3,padx=5,pady=5)
+            self.boton_cargabd.grid(row=5,column=0,padx=50,pady=20)
+            self.boton_readmision.grid(row=3,column=1,padx=50,pady=20)
+            self.boton_reg_curso.grid(row=4,column=1,padx=50,pady=20)
+
+
+        elif tipoUsuario == 1 or tipoUsuario == 0: # Operaciones Generales
+            padre.geometry('1200x400')
+
+            # Etiquetas
+            self.label_alumnos = Label(self.frame, text="Alumnos", fg="blue", font="Arial 16 bold", background='white')
+
+            self.label_materias = Label(self.frame, text="Materias", fg="blue", font="Arial 16 bold",
+                                        background='white')
+
+            # botones
+            self.boton_listar_alumnos = Button(self.frame, text="Listar Alumnos", command=lambda: LisTAlu(basedatos))
+
+            self.boton_salir = Button(self.frame, text="Cerrar Sesion", command=lambda: cambiarPantallas(self, "login"))
+
+            self.boton_listado_materias = Button(self.frame, text="Listado Materias",
+                                                 command=lambda: ListMat(basedatos))
+
+            self.boton_legajo = Button(self.frame, text="Legajo",
+                                       command=lambda: cambiarPantallas(self, "legajo", tipoUsuario))
+
+            self.boton_readmision = Button(self.frame, text="Readmisión", command=lambda: ListInas(basedatos))
+
+            self.boton_reg_curso = Button(self.frame, text="Registro por curso",
+                                          command=lambda: cambiarPantallas(self, "alumnosxcurso", tipoUsuario))
+            # posiciones
+
+            self.label_alumnos.grid(row=0, column=1, padx=50, pady=20)
+            self.label_materias.grid(row=1, column=1, padx=50, pady=20)
+
+            self.boton_listar_alumnos.grid(row=0, column=2, padx=50, pady=20)
+            self.boton_listado_materias.grid(row=1, column=2, padx=50, pady=20)
+            self.boton_legajo.grid(row=0, column=3, padx=50, pady=20)
+            self.boton_readmision.grid(row=0, column=4, padx=50, pady=20)
+            self.boton_reg_curso.grid(row=0, column=5, padx=50, pady=20)
+
+            self.boton_salir.grid(row=3, column=1, padx=5, pady=5)
+
+
+
+        
+
+
 
 
 class VentanaAltaAlumno:
     def __init__(self, padre):
         self.frame = Frame(padre)
-        padre.geometry("400x800")
+        padre.geometry("400x700")
         padre.title("Alta Alumno")
         self.frame.pack()
+        self.frame.config(background='white')
 
         # variables
         self.nroregistro = IntVar()
@@ -149,18 +227,18 @@ class VentanaAltaAlumno:
 
         # Creamos las etiquetas
 
-        self.label_nro_registro = Label(self.frame, text="Registro:")
-        self.label_nombre = Label(self.frame, text="Nombre:")
-        self.label_apellido = Label(self.frame, text="Apellido:")
-        self.label_dni = Label(self.frame, text="DNI:")
-        self.label_telefono = Label(self.frame, text="Telefono:")
-        self.label_fecha = Label(self.frame, text="Fecha de Nacimiento:")
-        self.label_email = Label(self.frame, text="Email:")
-        self.label_año = Label(self.frame, text="Año:")
-        self.label_a_fecha = Label(self.frame, text="Fecha de Alta:")
-        self.label_usuario = Label(self.frame, text="Usuario:")
-        self.label_concepto = Label(self.frame, text="Concepto:")
-        self.label_inasistencias = Label(self.frame, text="Inasistencias:")
+        self.label_nro_registro = Label(self.frame, text="Registro:",background='white')
+        self.label_nombre = Label(self.frame, text="Nombre:",background='white')
+        self.label_apellido = Label(self.frame, text="Apellido:",background='white')
+        self.label_dni = Label(self.frame, text="DNI:",background='white')
+        self.label_telefono = Label(self.frame, text="Telefono:",background='white')
+        self.label_fecha = Label(self.frame, text="Fecha de Nacimiento:",background='white')
+        self.label_email = Label(self.frame, text="Email:",background='white')
+        self.label_año = Label(self.frame, text="Curso:",background='white')
+        self.label_a_fecha = Label(self.frame, text="Fecha de Alta:",background='white')
+        self.label_usuario = Label(self.frame, text="Usuario:",background='white')
+        self.label_concepto = Label(self.frame, text="Concepto:",background='white')
+        self.label_inasistencias = Label(self.frame, text="Inasistencias:",background='white')
 
         # Creacion de los campos de texto
 
@@ -270,16 +348,15 @@ class VentanaUsuario:
     def __init__(self, padre):
         self.frame = Frame(padre)
         self.frame.pack()
+        self.frame.config(background='white')
         padre.title('Registrar Usuario')
 
         # Se definen los labels de las cajas de texto
-        self.label_nombre_usuario = Label(self.frame, text="Ingrese Nombre Usuario:")
-        self.label_passw1 = Label(self.frame, text="Ingrese Contraseña:")
-        self.label_passw2 = Label(self.frame, text="Ingrese Contraseña Nuevamente:")
+        self.label_nombre_usuario = Label(self.frame, text="Ingrese Nombre Usuario:",background='white')
+        self.label_passw1 = Label(self.frame, text="Ingrese Contraseña:",background='white')
 
         self.usuario = StringVar()
         self.contraseña = StringVar()
-        self.contraseña2 = StringVar()
         self.opcion = IntVar()
         self.opcion.set(-1)
 
@@ -287,7 +364,6 @@ class VentanaUsuario:
 
         self.texto_nombre = Entry(self.frame, textvariable=self.usuario, width=30)
         self.texto_passw1 = Entry(self.frame, textvariable=self.contraseña, width=30, show="*")
-        self.texto_passw2 = Entry(self.frame, textvariable=self.contraseña2, width=30, show="*")
 
         # Botones para tipo de usuario
         self.r_admin = Radiobutton(self.frame, text="Administrador", variable=self.opcion, value=2)
@@ -296,7 +372,7 @@ class VentanaUsuario:
         # se definen los botones.
 
         self.boton_registrar = Button(self.frame, text="Registrar",
-                                      command=(lambda: basedatos.RegUs(self.usuario.get(), self.contraseña.get(),
+                                      command=(lambda: RegUs(basedatos,self.usuario.get(), self.contraseña.get(),
                                                                        self.opcion.get())))
 
         self.boton_cancelar = Button(self.frame, text="Cancelar",
@@ -311,8 +387,6 @@ class VentanaUsuario:
         self.texto_nombre.pack(side=TOP, fill=X, expand=True, padx=5, pady=5)
         self.label_passw1.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         self.texto_passw1.pack(side=TOP, fill=X, expand=True, padx=5, pady=5)
-        self.label_passw2.pack(side=TOP, fill=X, expand=True, padx=5, pady=5)
-        self.texto_passw2.pack(side=TOP, fill=X, expand=True, padx=5, pady=5)
         self.r_admin.pack(side=LEFT)
         self.r_doc.pack(side=LEFT)
 
@@ -325,6 +399,7 @@ class VentanaMaterias:
     def __init__(self, padre, tipoUsuario):
         self.frame = Frame(padre)
         self.frame.grid()
+        self.frame.config(background='white')
         padre.title('Materias')
 
         # variables
@@ -335,15 +410,16 @@ class VentanaMaterias:
         self.nota3 = IntVar()
 
         # Labels
-        self.label_registro_alumno = Label(self.frame, text="Registro")
-        self.label_nombre_alumno = Label(self.frame, text="Alumno")
-        self.label_CodigoMateria = Label(self.frame, text="Codigo de Materia")
-        self.label_Materia1 = Label(self.frame, text="")
-        self.label_nota1 = Label(self.frame, text="nota 1")
-        self.label_nota2 = Label(self.frame, text="nota 2")
-        self.label_nota3 = Label(self.frame, text="nota 3")
+        self.label_registro_alumno = Label(self.frame, text="Registro",background='white')
+        self.label_nombre_alumno = Label(self.frame, text="Alumno",background='white')
+        self.label_CodigoMateria = Label(self.frame, text="Codigo de Materia",background='white')
+        self.label_Materia1 = Label(self.frame, text="",background='white')
+        self.label_nota1 = Label(self.frame, text="nota 1",background='white')
+        self.label_nota2 = Label(self.frame, text="nota 2",background='white')
+        self.label_nota3 = Label(self.frame, text="nota 3",background='white')
 
         # Campos de texto
+
         self.texto_registro = Entry(self.frame, textvariable=self.registro, width=10)
         self.texto_codigoMateria = Entry(self.frame, textvariable=self.codigoMateria, width=10)
         self.texto_nota1 = Entry(self.frame, textvariable=self.nota1, width=10)
@@ -359,9 +435,10 @@ class VentanaMaterias:
         self.boton_back = Button(self.frame, text="Volver", width=15,
                                  command=lambda: cambiarPantallas(self, "menu principal", tipoUsuario))
         self.boton_eliminar = Button(self.frame, text="Reset", width=15,
-                                     command=lambda: self.setNotas(self.registro.get(), self.codigoMateria.get()))
+                                     command=lambda: self.setearTexto(self.registro.get(),self.codigoMateria.get(),1))
 
         # posiciones
+
         self.label_registro_alumno.grid(row=0, column=1)
         self.texto_registro.grid(row=0, column=2)
         self.label_CodigoMateria.grid(row=1, column=1)
@@ -380,19 +457,28 @@ class VentanaMaterias:
         self.boton_back.grid(row=10, column=5)
         self.boton_eliminar.grid(row=10, column=3)
 
-    def setearTexto(self, nro_registro, codigo_materia):
+    def setearTexto(self, nro_registro, codigo_materia,reset=0,nota1 = 0,nota2=0,nota3=0):
         m = Materia()
 
         tabla = basedatos.getTablaMaterias()
 
+        tablaA = basedatos.getTablaAlumnos()
+
         m = tabla.ConsultaMat(nro_registro, codigo_materia)
+        a = tablaA.ConsultaAlumno(nro_registro)
+
+        if reset == 0:
+            nota1 = m.getnota1()
+            nota2 = m.getNota2()
+            nota3 = m.getNota3()
+
         self.label_Materia1.config(text=m.getnombre())
+        self.label_nombre_alumno.config(text = a.getnombre())
+        self.nota1.set(nota1)
+        self.nota2.set(nota2)
+        self.nota3.set(nota3)
 
-        self.nota1.set(m.getnota1())
-        self.nota1.set(m.getNota2())
-        self.nota1.set(m.getNota3())
-
-    def setNotas(self, nro_registro, codigo, nota1=0, nota2=0, nota3=0):
+    def setNotas(self, nro_registro, codigo, nota1, nota2, nota3):
         tabla = basedatos.getTablaMaterias()
         m = tabla.ConsultaMat(nro_registro, codigo)
         m.setNota1(nota1)
@@ -400,25 +486,28 @@ class VentanaMaterias:
         m.setNota3(nota3)
         tabla.ModificacionMat(m)
         basedatos.setTablaMaterias(tabla)
+        messagebox.showinfo("Materia cargada","Materia " + m.getnombre()+ "Modificada")
 
 
 class Legajo:
     def __init__(self, padre, tipoUsuario):
         self.frame = Frame(padre)
         self.frame.grid()
+        self.frame.config(background='white')
         padre.title('Legajo')
+        padre.geometry('700x500')
 
         # variables
         self.dni = IntVar()
 
         # label
 
-        self.label_dni = Label(self.frame, text="Ingrese el dni")
-        self.label_registro_alumno = Label(self.frame, text="Legajo")
-        self.label_Materia1 = Label(self.frame, text="Nombre de la Materia")
-        self.label_nota1 = Label(self.frame, text="nota 1")
-        self.label_nota2 = Label(self.frame, text="nota 2")
-        self.label_nota3 = Label(self.frame, text="nota 3")
+        self.label_dni = Label(self.frame, text="Ingrese el dni",background='white')
+        self.label_registro_alumno = Label(self.frame, text="Legajo",background='white')
+        self.label_Materia1 = Label(self.frame, text="Nombre de la Materia",background='white')
+        self.label_nota1 = Label(self.frame, text="nota 1",background='white')
+        self.label_nota2 = Label(self.frame, text="nota 2",background='white')
+        self.label_nota3 = Label(self.frame, text="nota 3",background='white')
 
         # texto
 
@@ -493,6 +582,7 @@ class pantallaArchivo:
     def __init__(self, padre, tipoUsuario):
         self.frame = Frame(padre)
         self.frame.pack()
+        self.frame.config(background='white')
         padre.geometry("400x200")
         padre.title('BackUp')
 
@@ -500,7 +590,7 @@ class pantallaArchivo:
         self.archivo = StringVar()
 
         # Label
-        self.label_nombre_archivo = Label(self.frame, text="Archivo")
+        self.label_nombre_archivo = Label(self.frame, text="Archivo",background='white')
 
         # Texto
         self.texto_archivo = Entry(self.frame, textvariable=self.archivo)
@@ -522,6 +612,7 @@ class pantallaArchivoCarga:
     def __init__(self, padre, tipoUsuario):
         self.frame = Frame(padre)
         self.frame.pack()
+        self.frame.config(background='white')
         padre.geometry("400x200")
         padre.title('CargaBD')
 
@@ -529,7 +620,7 @@ class pantallaArchivoCarga:
         self.archivo = StringVar()
 
         # Label
-        self.label_nombre_archivo = Label(self.frame, text="Archivo")
+        self.label_nombre_archivo = Label(self.frame, text="Archivo",background='white')
 
         # Texto
         self.texto_archivo = Entry(self.frame, textvariable=self.archivo)
@@ -545,6 +636,71 @@ class pantallaArchivoCarga:
         self.texto_archivo.pack(side=LEFT)
         self.boton_backup.pack(side=LEFT)
         self.boton_back.pack(side=BOTTOM)
+
+
+
+
+
+class ventanaAlumnosxCurso:
+    def __init__(self,padre,tipoUsuario):
+        self.frame = Frame(padre)
+        self.frame.grid()
+        self.frame.config(background='white')
+        padre.geometry("500x600")
+        padre.title('Listado de Alumnos por Curso')
+
+        # variable
+        self.curso = IntVar()
+
+        # Etiquetas
+
+        self.label_norregistro = Label(self.frame, width=10, text="Nro \nRegistro",background='white')
+        self.label_nombre = Label(self.frame, text="Nombre y Apellido",background='white')
+        self.label_dni = Label(self.frame, width=10, text="DNI",background='white')
+        self.label_buscar_curso = Label(self.frame, text="Ingrese el curso ",background='white')
+
+        # texto
+        self.t_buscar_curso = Entry(self.frame, textvariable=self.curso)
+
+        # boton
+        self.b_buscar_cursp = Button(self.frame, text="Buscar", command=lambda: self.LisRegXCurso(basedatos,self.curso.get()))
+
+        self.boton_back = Button(self.frame, text="Volver",
+                                 command=lambda: cambiarPantallas(self, "menu principal", tipoUsuario))
+        # ListBox (tablas)
+
+        self.l_nroregistro = Listbox(self.frame, width=10, height=30)
+        self.l_nombres = Listbox(self.frame, height=30)
+        self.l_dni = Listbox(self.frame, width=10, height=30)
+
+        ## for item in registro:
+
+        # acomodamos las etiquetas de las tablas
+
+        self.label_buscar_curso.grid(row=0, column=0)
+        self.t_buscar_curso.grid(row=0, column=1)
+        self.b_buscar_cursp.grid(row=0, column=3)
+        self.boton_back.grid(row=0, column=5)
+
+        self.label_norregistro.grid(row=1, column=0)
+        self.l_nroregistro.grid(row=2, column=0)
+
+        self.label_nombre.grid(row=1, column=1)
+        self.l_nombres.grid(row=2, column=1)
+
+        self.label_dni.grid(row=1, column=2)
+        self.l_dni.grid(row=2, column=2)
+
+    def LisRegXCurso(self, curso):
+        self.listaM = list(map(lambda x: alumnos(x), basedatos.getTablaAlumnos().getListaAlumnos()))
+
+        self.registro = list(functools.reduce(lambda ac, x: auxiliar(ac, x, curso), self.listaM, []))
+
+        for item in self.registro:
+            self.l_nroregistro.insert(0, item[0])
+            self.l_nombres.insert(0, item[1] + "  " + item[2])
+            self.l_dni.insert(0, item[3])
+
 '''
 def CambiarBD(archivo):
     basedatos.setBD(cargaArchivos(archivo))
@@ -552,5 +708,6 @@ def CambiarBD(archivo):
 
 
 root = Tk()
+root.config(background="white")
 Login(root)
 root.mainloop()

@@ -5,17 +5,15 @@ from LaboratorioPython.Materia import Materia
 class T_Alumnos:
 
     def __init__(self):
-        self.__listaAlumnos=[]
+        self.__listaAlumnos = []
 
 
     def AltaAlumno(self, a = Alumnos()):
         lista=list(filter(lambda x: x.getDni() ==a.getDni(),self.__listaAlumnos))
-        print(lista)
         if lista==[]:
             self.__listaAlumnos.append(a)
             return True
         else:
-            print("ALUMNO YA EXISTENTE EN EL SISTEMAA!!")
             return False
 
     def BajaAlumno(self,NroRegistro):
@@ -36,16 +34,13 @@ class T_Alumnos:
                 self.__listaAlumnos[self.__listaAlumnos.index(al)] = a
                 return True
             else:
-                error = "no existe un usuario con ese nombre"
-                print(error)
                 return False
 
     def ConsultaAlumno(self,NroRegistro):
         for i in self.__listaAlumnos:
             if NroRegistro == i.getNroregistro():
                 return i
-            else:
-                return False
+        return False
 
     def legajo(self,dni):
         alumnos = list(filter(lambda x: x.getDni()== dni, self.__listaAlumnos))
@@ -62,7 +57,7 @@ class T_Alumnos:
 
 class T_Materias:
     def __init__(self):
-        self.__listaMaterias=[Materia()]
+        self.__listaMaterias = []
 
     def AltaMat(self, m = Materia()):
         self.__listaMaterias.append(m)
@@ -77,6 +72,7 @@ class T_Materias:
         for i in self.__listaMaterias:
             if m.getCodigo() == i.getCodigo():
                 self.__listaMaterias[self.__listaMaterias.index(i)]= m
+                return True
 
     def ConsultaMat(self, nro_registro,cod_materia):
         lista = list(filter(lambda x: x.getCodigoAlumno()==nro_registro, self.__listaMaterias))
@@ -84,8 +80,8 @@ class T_Materias:
         for i in lista:
             if i.getCodigo()==cod_materia:
                 return i
-            else:
-                print("el alumno no tiene materias")
+
+        print("el alumno no tiene materias")
 
 
     def ConsultLegajo(self,nro_registro):

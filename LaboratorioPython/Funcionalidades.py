@@ -1,3 +1,5 @@
+import functools
+
 from LaboratorioPython.BD_Escuela import *
 from tkinter import *
 from tkinter import messagebox, font
@@ -8,20 +10,21 @@ from LaboratorioPython.Materia import Materia
 def validarLogin(nombre_u, passw, bdatos):
     control = -1
     acceso = bdatos.getAcceso()
-    for i in acceso.keys():
-        nombre = i[2:]
-        prefijo = i[:2]
+    for i in acceso.items():
+        nombre = i[0][2:]
+        prefijo = i[0][:2]
+
         if (nombre_u == nombre) and (prefijo == "P-"):
-            if acceso[i] == passw:
+            if i[1] == passw:
                 control = 2  # el usuario es PROGRAMADOR
         elif (nombre_u == nombre) and (prefijo == "D-"):
-            if acceso[i] == passw:
+            if i[1] == passw:
                 control = 1  # el usuario es DOCENTE
         elif (nombre_u == nombre) and (prefijo == "A-"):
-            if acceso[i] == passw:
+            if i[1] == passw:
                 control = 0  # el usuario es ALUMNO
 
-        return control
+    return control
 
 
 def BackUpBD(bd=BD_Escuela(), nombreArchivo=""):
@@ -77,9 +80,15 @@ def BackUpBD(bd=BD_Escuela(), nombreArchivo=""):
     messagebox.showinfo("Backup", "Se han guardado los datos exitosamente en " + nombreArchivo)
 
 
-def cargaArchivos(nombreArchivo,bd):
-    tabla_materias =T_Materias()
+def cargaArchivos(nombreArchivo, bd: BD_Escuela):
+    tabla_Materias = T_Materias()
+
     listaMaterias = []
+
+    bd.setTablaMaterias(T_Materias())
+    bd.setCantidadUsuarios(0)
+    bd.setTablaAlumnos(T_Alumnos())
+
     file = open(nombreArchivo, "r")
     texto = file.read()
     lista = texto.split("\n\n")
@@ -95,7 +104,7 @@ def cargaArchivos(nombreArchivo,bd):
     # limpio el string de materias
 
     materias = lista[2].split("----")
-    materias= materias[1:]
+    materias = materias[1:]
     materias = str(materias).split("Materia n°")
     materias = materias[1:]
 
@@ -106,7 +115,7 @@ def cargaArchivos(nombreArchivo,bd):
 
     acceso = datos_generales[1].split(":")
     acceso = acceso[1].split(" ")
-    acceso=acceso[:-1]
+    acceso = acceso[:-1]
     for i in acceso:
         usuarios = i.split(",")
         usuario = usuarios[0]
@@ -126,10 +135,12 @@ def cargaArchivos(nombreArchivo,bd):
     nombreTablas = nombreTablas[1].split(" ")
     tabla_alumnos = nombreTablas[0].split(",")
     tabla_materias = nombreTablas[1].split(",")
+    
+
     nombretablas = {tabla_alumnos[0]: tabla_alumnos[1], tabla_materias[0]: tabla_materias[1]}
+    
     bd.setNombreTablas(nombretablas)
     '''
-
     # Cargamos la lista de alumnos
 
     for i in alumnos:
@@ -153,6 +164,7 @@ def cargaArchivos(nombreArchivo,bd):
         bd.AltaAlumnoBaseDatos(a1)
 
     # cargamos la lista de materias
+
     for i in materias:
         m = i.split("\\n")
         num_materia = m[0].split(":")
@@ -162,15 +174,13 @@ def cargaArchivos(nombreArchivo,bd):
         nota2 = m[4].split(":")
         nota3 = m[5].split(":")
 
-        m1 = Materia(nombre_materia[1],nota1[1],nota2[1],nota3[1],int(num_materia[0]),int(nro_alumno[1]))
+        m1 = Materia(nombre_materia[1], nota1[1], nota2[1], nota3[1], int(num_materia[0]), int(nro_alumno[1]))
 
         listaMaterias.append(m1)
 
-    tabla_materias.setListaMaterias(listaMaterias)
-    bd.setTablaMaterias(tabla_materias)
-
-
-
+    tabla_Materias.setListaMaterias(listaMaterias)
+    bd.setTablaMaterias(tabla_Materias)
+    messagebox.showinfo("carga de archivo exitosa","carga de archivo exitosa")
 
 
 def LisTAlu(bd=BD_Escuela()):
@@ -188,7 +198,7 @@ def LisTAlu(bd=BD_Escuela()):
     label_telefono = Label(root, text="Telefono")
     label_fecha = Label(root, width=10, text="Fecha de\n Nacimiento")
     label_email = Label(root, text="Email")
-    label_año = Label(root, text="Año")
+    label_año = Label(root, text="Curso")
     label_a_fecha = Label(root, width=10, text="Fecha de\n Alta")
     label_b_fecha = Label(root, width=10, text="Fecha de\n Baja")
     label_usuario = Label(root, text="Usuario")
@@ -293,12 +303,12 @@ def TablaUsuarios(bd=BD_Escuela()):
     root.mainloop()
 
 
-def ListMat(base_datos=BD_Escuela()):
+def ListMat(base_datos = BD_Escuela()):
     root = Tk()
     root.title("Listado de Materias")
     root.geometry('600x900')
     root.grid()
-    tabla = T_Materias()
+   # tabla = T_Materias()
     tabla = base_datos.getTablaMaterias()
 
     # Etiquetas
@@ -317,8 +327,7 @@ def ListMat(base_datos=BD_Escuela()):
     l_nota2 = Listbox(root, width=10, height=30)
     l_nota3 = Listbox(root, width=10, height=30)
 
-    for item in tabla.getListaMaterias():
-        print("asdasdasdasddas")
+    for item in base_datos.getTablaMaterias().getListaMaterias():
         l_registro.insert(0, item.getCodigoAlumno())
         l_codigo_materia.insert(0, item.getCodigo())
         l_materia.insert(0, item.getnombre())
@@ -345,103 +354,59 @@ def ListMat(base_datos=BD_Escuela()):
     root.mainloop()
 
 
-'''
-def ventanaAltaAlumno(bdatos = BD_Escuela()):
+def ListInas(basedatos: BD_Escuela):
+    readmision = list(filter(lambda x: x.getInasistencias() > 15, basedatos.getTablaAlumnos().getListaAlumnos()))
 
-    ventana = Tk()
-    ventana.geometry("400x600")
+    root = Tk()
+    root.title("Listado de Alumnos")
+    root.geometry('800x400')
 
-    # variables
-    nroregistro = bdatos.getCantidadAlumnos()+1
-    nombre = StringVar()
-    apellido = StringVar()
-    dni = IntVar()
-    telefono = IntVar()
-    fechaNacimiento = StringVar()
-    email = StringVar()
-    año = IntVar()
-    fechaAlta = StringVar()
-    fechaBaja = StringVar()
-    usuario = StringVar()
-    contraseña = StringVar()
-    inasistencias = IntVar()
-    concepto = StringVar()
+    # Etiquetas
 
-    # Creamos las etiquetas
+    label_nombre = Label(root, text="Nombre y Apellido")
+    label_año = Label(root, text="Año")
+    label_inasistencias = Label(root, text="Inasistencias")
+    label_concepto = Label(root, text="Concepto")
 
-    label_nombre = Label(ventana, text="Nombre:")
-    label_apellido = Label(ventana, text="Apellido:")
-    label_dni = Label(ventana, text="DNI:")
-    label_telefono = Label(ventana, text="Telefono:")
-    label_fecha = Label(ventana,  text="Fecha de Nacimiento:")
-    label_email = Label(ventana, text="Email:")
-    label_año = Label(ventana, text="Año:")
-    label_a_fecha = Label(ventana, text="Fecha de Alta:")
-    label_usuario = Label(ventana, text="Usuario:")
-    label_concepto = Label(ventana, text="Concepto:")
-    label_inasistencias = Label(ventana, text="Inasistencias:")
+    # ListBox (tablas)
 
-    # Creacion de los campos de texto
+    l_nombres = Listbox(root, height=30)
+    l_año = Listbox(root, width=10, height=30)
+    l_inasistencias = Listbox(root, height=30)
+    l_concepto = Listbox(root, height=30)
 
-    texto_nombre = Entry(ventana, textvariable=self.nombre, width=30)
-    texto_apellido = Entry(ventana, textvariable=apellido, width=30)
-    texto_dni = Entry(ventana, textvariable=dni, width=30)
-    texto_telefono = Entry(ventana, textvariable=telefono, width=30)
-    texto_fecha= Entry(ventana, textvariable= fechaNacimiento, width=30)
-    texto_email = Entry(ventana, textvariable=email, width=30)
-    texto_año = Entry(ventana, textvariable=año, width=30)
-    texto_a_fecha = Entry(ventana, textvariable=fechaAlta, width=30)
-    texto_usuario = Entry(ventana, textvariable=usuario, width=30)
-    texto_concepto = Entry(ventana, textvariable=concepto, width=30)
-    texto_inasistencias = Entry(ventana, textvariable=inasistencias, width=30)
+    for item in readmision:
+        l_nombres.insert(0, item.getnombre() + "  " + item.getApellido())
+        l_año.insert(0, item.getAño())
+        l_inasistencias.insert(0, item.getInasistencias())
+        l_concepto.insert(0, item.getConcepto())
 
-    # Creacion de botones
-
-    # boton_aceptar = Button(ventana, text="Aceptar", command=lambda: AAlumno(bdatos,nroregistro,nombre.get(),apellido.get(),dni.get(),telefono.get(),fechaNacimiento.get(),email.get(),año.get(),fechaAlta.get(),fechaBaja.get(),usuario.get(),inasistencias.get(),concepto.get()))
-    boton_modificar = Button(ventana, text="Modificar", command=lambda: print(nombre.get()))
-    boton_elimiar = Button(ventana, text="eliminar")
-
-    label_nombre.pack(side=TOP)
-    texto_nombre.pack(side=TOP)
-
-    label_apellido.pack(side=TOP)
-    texto_apellido.pack(side=TOP)
-
-    label_dni.pack(side=TOP)
-    texto_dni.pack(side=TOP)
-
-    label_telefono.pack(side=TOP)
-    texto_telefono.pack(side=TOP)
-
-    label_fecha.pack(side=TOP)
-    texto_fecha.pack(side=TOP)
-
-    label_email.pack(side=TOP)
-    texto_email.pack(side=TOP)
-
-    label_año.pack(side=TOP)
-    texto_año.pack(side=TOP)
-
-    label_a_fecha.pack(side=TOP)
-    texto_a_fecha.pack(side=TOP)
-
-    label_usuario.pack(side=TOP)
-    texto_usuario.pack(side=TOP)
-
-    label_concepto.pack(side=TOP)
-    texto_concepto.pack(side=TOP)
-
-    label_inasistencias.pack(side=TOP)
-    texto_inasistencias.pack(side=TOP)
+    # acomodamos las etiquetas de las tablas
+    label_nombre.grid(row=0, column=1)
+    label_año.grid(row=0, column=2)
+    label_inasistencias.grid(row=0, column=3)
+    label_concepto.grid(row=0, column=4)
+    l_nombres.grid(row=1, column=1)
+    l_año.grid(row=1, column=2)
+    l_inasistencias.grid(row=1, column=3)
+    l_concepto.grid(row=1, column=4)
+    root.mainloop()
 
 
-#     boton_aceptar.pack(side=LEFT)
-    boton_modificar.pack(side=LEFT)
-    boton_elimiar.pack(side=RIGHT)
+def auxiliar(lista, elemento, curso):
+    if elemento[0] == curso:
+        for i in lista:
+            print(i[1] + elemento[1])
+            if i[1] < elemento[1]:
+                lista.insert(lista.index(i), elemento)
+                return lista
+        lista.append(elemento)
+        return lista
+    return lista
 
-    ventana.mainloop()
-    
-    '''
+
+def alumnos(a: Alumnos):
+    return [a.getAño(), a.getnombre(), a.getApellido(), a.getDni(), a.getNroregistro()]
 
 
 def AAlumno(bdatos, nroRegistro=0, nombre="defecto", apellido="", dni=55, telefono=0, fecha=0, email="", año=0
@@ -463,11 +428,11 @@ def MAlumno(bdatos, nroRegistro=0, nombre="defecto", apellido="", dni=55, telefo
                 , concepto, inasistencias)
     print(a.getEmail())
     if bdatos.modificarAlumno(a):
-        mensaje = messagebox.showinfo("Alumno Cargado"
-                                      ,
-                                      "El alumno: " + a.getnombre() + a.getApellido() + " \n ha sido cargado exitosamente")
+        messagebox.showinfo("Alumno Modificado"
+                            ,
+                            "El alumno: " + a.getnombre() + a.getApellido() + " \n ha sido modificado exitosamente")
     else:
-        error = messagebox.showerror("Error Registro", "Ya existe un alumno en la base de datos")
+        messagebox.showerror("Error Registro", "Ya existe un alumno en la base de datos")
 
 
 def CAlumno(bdatos=BD_Escuela(), nro_registro=0):
@@ -479,4 +444,12 @@ def CAlumno(bdatos=BD_Escuela(), nro_registro=0):
 
 def EAlumno(bdatos=BD_Escuela(), nro_registro=0):
     bdatos.BajaAlumno(nro_registro)
-    print("exito")
+    messagebox.showinfo("Alumno Eliminado",
+                        "El Alumno con el numero de registro: " + nro_registro + " Ha sido eliminado exitosamente")
+
+
+def RegUs(baseDatos: BD_Escuela, nombre, contraseña, tipo):
+    if baseDatos.RegUs(nombre, contraseña, tipo):
+        messagebox.showinfo("Carga con Exito", "se ha cargado el usuario con exito")
+    else:
+        messagebox.showerror("usuario existente", "Ya existe ese usuario en el sistema")
