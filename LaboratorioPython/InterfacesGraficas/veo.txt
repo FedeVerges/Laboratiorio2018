@@ -1,10 +1,10 @@
-Cantidad de Usuarios:8
-Acceso:P-admin,ad1 A-Federico,41221778 A-Agustin,41221770 A-aaaa,1234 A-zzz,12312312 
+Cantidad de Usuarios:23
+Acceso:P-admin,ad1 A-Federico,41221778 A-Agustin,41221770 A-aaaa,1234 A-zzz,12312312 D-abc,abc D-jjj,jjj A-asdasd,123456789 
 Nombre de las tablas:T_Alumnos,0 T_Materias,1 
 
 ----
 Alumno n°1
-Nombre:Federico
+Nombre:Federico BAJA
 Apellido:Verges
 Dni:41221778
 Telefono:2664372050
@@ -12,7 +12,7 @@ Email:None
 Fecha de nacimiento:16/6/1998
 Año que cursa:3
 Fecha de ingreso a la institución:2/2/2016
-Fecha de baja:
+Fecha de baja:23/11/18
 Usuario:federico
 Concepto:MA
 Inasistencias:0 
@@ -46,7 +46,7 @@ Concepto:MA
 Inasistencias:0 
 ----
 Alumno n°8
-Nombre:zzz
+Nombre:zzz BAJA
 Apellido:zzz
 Dni:12312312
 Telefono:12312312
@@ -54,42 +54,56 @@ Email:asdasdasdasd@asdasdasdsa
 Fecha de nacimiento:12123123
 Año que cursa:3
 Fecha de ingreso a la institución:12312321
-Fecha de baja:0
+Fecha de baja:23/11/18
 Usuario:zzzzz
 Concepto:MA
 Inasistencias:0 
+----
+Alumno n°13
+Nombre:asdasd
+Apellido:asdasd
+Dni:123456789
+Telefono:1234
+Email:feasda@asdasd
+Fecha de nacimiento:12/4/1990
+Año que cursa:3
+Fecha de ingreso a la institución:12/5/2010
+Fecha de baja:0
+Usuario:aaa
+Concepto:MA
+Inasistencias:16 
 
 ----
 Materia n°1
-Nombre:Matematicas
+Nombre:Matematicas BAJA
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°2
-Nombre:Lengua
-Nro Registro de Alumno:1
-nota 1:10
+Nombre:Lengua BAJA
+Nro Registro de Alumno:8
+nota 1:5
 nota 2:5
-nota 3:9
+nota 3:5
 ----
 Materia n°3
 Nombre:Física
-Nro Registro de Alumno:1
-nota 1:0
-nota 2:0
-nota 3:0
+Nro Registro de Alumno:2
+nota 1:8
+nota 2:8
+nota 3:8
 ----
 Materia n°4
-Nombre:Química
+Nombre:Química BAJA
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°5
-Nombre:Biología
+Nombre:Biología BAJA
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
@@ -97,27 +111,27 @@ nota 3:0
 ----
 Materia n°6
 Nombre:Etica
-Nro Registro de Alumno:1
-nota 1:0
-nota 2:0
-nota 3:0
+Nro Registro de Alumno:7
+nota 1:2
+nota 2:2
+nota 3:2
 ----
 Materia n°7
-Nombre:Geología
+Nombre:Geología BAJA
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°8
-Nombre:Historia
+Nombre:Historia BAJA
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°9
-Nombre:Computacion
+Nombre:Computacion BAJA
 Nro Registro de Alumno:1
 nota 1:0
 nota 2:0
@@ -140,9 +154,9 @@ nota 3:0
 Materia n°3
 Nombre:Física
 Nro Registro de Alumno:2
-nota 1:0
-nota 2:0
-nota 3:0
+nota 1:8
+nota 2:8
+nota 3:8
 ----
 Materia n°4
 Nombre:Química
@@ -224,9 +238,9 @@ nota 3:0
 Materia n°6
 Nombre:Etica
 Nro Registro de Alumno:7
-nota 1:0
-nota 2:0
-nota 3:0
+nota 1:2
+nota 2:2
+nota 3:2
 ----
 Materia n°7
 Nombre:Geología
@@ -250,64 +264,127 @@ nota 2:0
 nota 3:0
 ----
 Materia n°1
-Nombre:Matematicas
+Nombre:Matematicas BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°2
-Nombre:Lengua
+Nombre:Lengua BAJA
 Nro Registro de Alumno:8
-nota 1:0
-nota 2:0
-nota 3:0
+nota 1:5
+nota 2:5
+nota 3:5
 ----
 Materia n°3
-Nombre:Física
+Nombre:Física BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°4
-Nombre:Química
+Nombre:Química BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°5
-Nombre:Biología
+Nombre:Biología BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°6
-Nombre:Etica
+Nombre:Etica BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°7
-Nombre:Geología
+Nombre:Geología BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°8
-Nombre:Historia
+Nombre:Historia BAJA
 Nro Registro de Alumno:8
 nota 1:0
 nota 2:0
 nota 3:0
 ----
 Materia n°9
-Nombre:Computacion
+Nombre:Computacion BAJA
 Nro Registro de Alumno:8
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°1
+Nombre:Matematicas
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°2
+Nombre:Lengua
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°3
+Nombre:Física
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°4
+Nombre:Química
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°5
+Nombre:Biología
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°6
+Nombre:Etica
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°7
+Nombre:Geología
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°8
+Nombre:Historia
+Nro Registro de Alumno:13
+nota 1:0
+nota 2:0
+nota 3:0
+----
+Materia n°9
+Nombre:Computacion
+Nro Registro de Alumno:13
 nota 1:0
 nota 2:0
 nota 3:0

@@ -308,7 +308,9 @@ def ListMat(base_datos = BD_Escuela()):
     root.title("Listado de Materias")
     root.geometry('600x900')
     root.grid()
+
    # tabla = T_Materias()
+
     tabla = base_datos.getTablaMaterias()
 
     # Etiquetas
@@ -396,8 +398,7 @@ def ListInas(basedatos: BD_Escuela):
 def auxiliar(lista, elemento, curso):
     if elemento[0] == curso:
         for i in lista:
-            print(i[1] + elemento[1])
-            if i[1] < elemento[1]:
+            if i[1].casefold() < elemento[1].casefold():
                 lista.insert(lista.index(i), elemento)
                 return lista
         lista.append(elemento)

@@ -342,7 +342,7 @@ class VentanaAltaAlumno:
                 self.usuario.set(a.getUsuario())
                 self.concepto.set(a.getConcepto())
                 self.inasistencias.set(a.getInasistencias())
-
+                self.texto_dni.config(state="disabled")
 
 class VentanaUsuario:
     def __init__(self, padre):
@@ -697,6 +697,7 @@ class ventanaAlumnosxCurso:
         self.registro = list(functools.reduce(lambda ac, x: auxiliar(ac, x, curso), self.listaM, []))
 
         for item in self.registro:
+            print("item" + item[1])
             self.l_nroregistro.insert(0, item[0])
             self.l_nombres.insert(0, item[1] + "  " + item[2])
             self.l_dni.insert(0, item[3])

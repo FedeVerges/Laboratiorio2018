@@ -156,5 +156,7 @@ class BD_Escuela():
         return self.__tablas[int(self.__NbreTablas['T_Alumnos'])].ModificacionAlumno(a)
 
     def BajaAlumno(self, nroRegistro):
+        a = self.__tablas[int(self.__NbreTablas['T_Alumnos'])].ConsultaAlumno(nroRegistro)
+        self.ElimUs(a.getnombre())
         if self.__tablas[int(self.__NbreTablas['T_Alumnos'])].BajaAlumno(nroRegistro):
             self.__tablas[int(self.__NbreTablas['T_Materias'])].BajaMat(nroRegistro)

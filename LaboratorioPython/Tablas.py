@@ -35,7 +35,7 @@ class T_Alumnos:
 
     def ModificacionAlumno(self,a = Alumnos()):
         for al in self.__listaAlumnos:
-            if a.getNroregistro() == al.getNroregistro():
+            if a.getDni() == al.getDni():
                 # self.__listaAlumnos[self.__listaAlumnos.index(al)]
                 al.setnombre(a.getnombre())
                 al.setApellido(a.getApellido())
@@ -50,8 +50,8 @@ class T_Alumnos:
                 al.setConcepto(a.getConcepto())
                 al.setInasistencias(a.getInasistencias())
                 return True
-            else:
-                return False
+
+        return False
 
     def ConsultaAlumno(self,NroRegistro):
         for i in self.__listaAlumnos:
@@ -86,9 +86,10 @@ class T_Materias:
 
     def ModificacionMat(self,m = Materia()):
         for i in self.__listaMaterias:
-            if m.getCodigo() == i.getCodigo():
-                self.__listaMaterias[self.__listaMaterias.index(i)]= m
-                return True
+            if m.getCodigoAlumno() == i.getCodigoAlumno():
+                if m.getCodigo() == i.getCodigo():
+                    self.__listaMaterias[self.__listaMaterias.index(i)]= m
+                    return True
 
     def ConsultaMat(self, nro_registro,cod_materia):
         lista = list(filter(lambda x: x.getCodigoAlumno()==nro_registro, self.__listaMaterias))
