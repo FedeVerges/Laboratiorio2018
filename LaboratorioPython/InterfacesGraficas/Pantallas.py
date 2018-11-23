@@ -217,11 +217,10 @@ class VentanaAltaAlumno:
         self.telefono = IntVar()
         self.fechaNacimiento = StringVar()
         self.email = StringVar()
-        self.año = IntVar()
+        self.anio = IntVar()
         self.fechaAlta = StringVar()
-        self.fechaBaja = StringVar()
+
         self.usuario = StringVar()
-        self.contraseña = StringVar()
         self.inasistencias = IntVar()
         self.concepto = StringVar()
 
@@ -234,7 +233,7 @@ class VentanaAltaAlumno:
         self.label_telefono = Label(self.frame, text="Telefono:",background='white')
         self.label_fecha = Label(self.frame, text="Fecha de Nacimiento:",background='white')
         self.label_email = Label(self.frame, text="Email:",background='white')
-        self.label_año = Label(self.frame, text="Curso:",background='white')
+        self.label_anio = Label(self.frame, text="Curso:",background='white')
         self.label_a_fecha = Label(self.frame, text="Fecha de Alta:",background='white')
         self.label_usuario = Label(self.frame, text="Usuario:",background='white')
         self.label_concepto = Label(self.frame, text="Concepto:",background='white')
@@ -244,13 +243,14 @@ class VentanaAltaAlumno:
 
         self.texto_nro_registro = Entry(self.frame, textvariable=self.nroregistro, width=30)
         self.texto_nro_registro.config(state="disabled")
+
         self.texto_nombre = Entry(self.frame, textvariable=self.nombre, width=30)
         self.texto_apellido = Entry(self.frame, textvariable=self.apellido, width=30)
         self.texto_dni = Entry(self.frame, textvariable=self.dni, width=30)
         self.texto_telefono = Entry(self.frame, textvariable=self.telefono, width=30)
         self.texto_fecha = Entry(self.frame, textvariable=self.fechaNacimiento, width=30)
         self.texto_email = Entry(self.frame, textvariable=self.email, width=30)
-        self.texto_año = Entry(self.frame, textvariable=self.año, width=30)
+        self.texto_anio = Entry(self.frame, textvariable=self.anio, width=30)
         self.texto_a_fecha = Entry(self.frame, textvariable=self.fechaAlta, width=30)
         self.texto_usuario = Entry(self.frame, textvariable=self.usuario, width=30)
         self.texto_concepto = Entry(self.frame, textvariable=self.concepto, width=30)
@@ -258,17 +258,17 @@ class VentanaAltaAlumno:
 
         # Creacion de botones
 
+
         self.boton_aceptar = Button(self.frame, text="Aceptar",
                                     command=lambda: AAlumno(basedatos, self.nroregistro.get(), self.nombre.get(),
                                                             self.apellido.get(), self.dni.get(), self.telefono.get()
-                                                            , self.fechaNacimiento.get(), self.email.get(),
-                                                            self.año.get(), self.fechaAlta.get(), self.fechaBaja.get()
-                                                            , self.usuario.get(),self.concepto.get(), self.inasistencias.get()))
+                                                            , self.fechaNacimiento.get(),self.email.get(),
+                                                            self.anio.get(), self.fechaAlta.get(),"0"
+                                                            , self.usuario.get(), self.concepto.get(), self.inasistencias.get()))
         self.boton_modificar = Button(self.frame, text="Modificar",
                                       command=lambda: MAlumno(basedatos, self.nroregistro.get(), self.nombre.get(),
                                                               self.apellido.get(), self.dni.get(), self.telefono.get()
-                                                              , self.fechaNacimiento.get(), self.email.get(),
-                                                              self.año.get(), self.fechaAlta.get(), self.fechaBaja.get()
+                                                              , self.fechaNacimiento.get(), self.email.get(),self.anio.get(), self.fechaAlta.get(),"0"
                                                               , self.usuario.get(),self.concepto.get(), self.inasistencias.get()))
 
         self.boton_elimiar = Button(self.frame, text="eliminar",
@@ -300,8 +300,8 @@ class VentanaAltaAlumno:
         self.label_email.pack(side=TOP)
         self.texto_email.pack(side=TOP)
 
-        self.label_año.pack(side=TOP)
-        self.texto_año.pack(side=TOP)
+        self.label_anio.pack(side=TOP)
+        self.texto_anio.pack(side=TOP)
 
         self.label_a_fecha.pack(side=TOP)
         self.texto_a_fecha.pack(side=TOP)
@@ -336,9 +336,9 @@ class VentanaAltaAlumno:
                 self.dni.set(a.getDni())
                 self.telefono.set(a.getTelefono())
                 self.email.set(a.getEmail())
+                self.anio.set(a.getAño())
                 self.fechaNacimiento.set(a.getFecha())
                 self.fechaAlta.set(a.getFechaAlta())
-                self.fechaBaja.set(a.getFechaBaja())
                 self.usuario.set(a.getUsuario())
                 self.concepto.set(a.getConcepto())
                 self.inasistencias.set(a.getInasistencias())
@@ -663,7 +663,7 @@ class ventanaAlumnosxCurso:
         self.t_buscar_curso = Entry(self.frame, textvariable=self.curso)
 
         # boton
-        self.b_buscar_cursp = Button(self.frame, text="Buscar", command=lambda: self.LisRegXCurso(basedatos,self.curso.get()))
+        self.b_buscar_cursp = Button(self.frame, text="Buscar", command=lambda: self.LisRegXCurso(self.curso.get()))
 
         self.boton_back = Button(self.frame, text="Volver",
                                  command=lambda: cambiarPantallas(self, "menu principal", tipoUsuario))

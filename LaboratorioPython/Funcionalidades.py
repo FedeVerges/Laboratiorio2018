@@ -409,9 +409,9 @@ def alumnos(a: Alumnos):
     return [a.getAño(), a.getnombre(), a.getApellido(), a.getDni(), a.getNroregistro()]
 
 
-def AAlumno(bdatos, nroRegistro=0, nombre="defecto", apellido="", dni=55, telefono=0, fecha=0, email="", año=0
+def AAlumno(bdatos, nroRegistro=0, nombre="defecto", apellido="", dni=55, telefono=0, fecha=0, email="hola", anio=0
             , fechaAlta=0, fechaBaja=0, usuario="", concepto="", inasistencias=0):
-    a = Alumnos(nroRegistro, nombre, apellido, dni, telefono, email, fecha, año, fechaAlta, fechaBaja, usuario
+    a = Alumnos(nroRegistro, nombre, apellido, dni, telefono, email, fecha, anio, fechaAlta, fechaBaja, usuario
                 , concepto, inasistencias)
     print(a.getEmail())
     if bdatos.AltaAlumnoBaseDatos(a):
@@ -445,7 +445,7 @@ def CAlumno(bdatos=BD_Escuela(), nro_registro=0):
 def EAlumno(bdatos=BD_Escuela(), nro_registro=0):
     bdatos.BajaAlumno(nro_registro)
     messagebox.showinfo("Alumno Eliminado",
-                        "El Alumno con el numero de registro: " + nro_registro + " Ha sido eliminado exitosamente")
+                        "El Alumno con el numero de registro: " + str(nro_registro) + " Ha sido eliminado exitosamente")
 
 
 def RegUs(baseDatos: BD_Escuela, nombre, contraseña, tipo):

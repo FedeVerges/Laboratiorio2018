@@ -49,7 +49,7 @@ class Alumnos:
         self.__telefono = telefono
 
     def getEmail(self):
-        self.__email
+        return self.__email
 
     def setEmail(self, email):
         self.__email = email

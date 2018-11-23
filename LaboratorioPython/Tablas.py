@@ -1,5 +1,8 @@
 from LaboratorioPython.Alumnos import Alumnos
 from LaboratorioPython.Materia import Materia
+import time
+
+
 
 
 class T_Alumnos:
@@ -17,12 +20,14 @@ class T_Alumnos:
             return False
 
     def BajaAlumno(self,NroRegistro):
-        lista=list(filter(lambda x: x.getNroregistro()==NroRegistro,self.__listaAlumnos))
+        hoy = time.strftime("%d/%m/%y")
+
+        lista=list(filter(lambda x: x.getNroregistro() == NroRegistro,self.__listaAlumnos))
         if lista ==[]:
             return False
         else:
-            lista[0].getNroregistro()
-            self.__listaAlumnos.remove(lista[0])
+            lista[0].setFechaBaja(hoy)
+            lista[0].setnombre(lista[0].getnombre()+" BAJA")
             return True
 
 
@@ -31,7 +36,19 @@ class T_Alumnos:
     def ModificacionAlumno(self,a = Alumnos()):
         for al in self.__listaAlumnos:
             if a.getNroregistro() == al.getNroregistro():
-                self.__listaAlumnos[self.__listaAlumnos.index(al)] = a
+                # self.__listaAlumnos[self.__listaAlumnos.index(al)]
+                al.setnombre(a.getnombre())
+                al.setApellido(a.getApellido())
+                al.setDni(a.getDni())
+                al.setTelefono(a.getTelefono())
+                al.setEmail(a.getEmail())
+                al.setFecha(a.getFecha())
+                al.setAño(a.getAño())
+                al.setFechaAlta(a.getFechaAlta())
+                al.setFechaBaja(a.getFechaBaja())
+                al.setUsuario(a.getUsuario())
+                al.setConcepto(a.getConcepto())
+                al.setInasistencias(a.getInasistencias())
                 return True
             else:
                 return False
@@ -65,8 +82,7 @@ class T_Materias:
     def BajaMat(self,nro_registro):
         lista = list(filter(lambda x: x.getCodigoAlumno()==nro_registro, self.__listaMaterias))
         for i in lista:
-            self.__listaMaterias.remove(i)
-            print("borrado")
+            i.setNombre(i.getnombre()+" BAJA")
 
     def ModificacionMat(self,m = Materia()):
         for i in self.__listaMaterias:
